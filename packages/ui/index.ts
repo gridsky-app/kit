@@ -7,14 +7,15 @@ export default defineNuxtModule({
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
 
+    await installModule('@nuxt/icon')
+
     await installModule('vuetify-nuxt-module')
 
     addComponentsDir({
       path: resolve('./runtime/components')
     });
 
-
-    nuxt.options.vuetify = {
+    nuxt.hook('vuetify:registerModule', register => register({
       moduleOptions: {
         styles: 'sass',
       },
@@ -57,7 +58,7 @@ export default defineNuxtModule({
           fallback: 'en',
         },
       }
-    };
+    }))
 
   }
 });
