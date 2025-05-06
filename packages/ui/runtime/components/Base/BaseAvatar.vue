@@ -10,6 +10,7 @@ const props = defineProps<{
     icon?: {
       name?: string;
       size?: number;
+      class?: string;
     };
   }
   link?: string;
