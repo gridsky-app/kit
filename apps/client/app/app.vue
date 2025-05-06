@@ -26,10 +26,10 @@
     </div>
 
     <BaseAvatar
-      image="https://cdn.bsky.app/img/avatar/plain/did:plc:iaf5ejdchj6nydfxmcrq5rm6/bafkreicmdm2vftqug6n36azkzpvo3hyt6rnv4c5xd2ykmmnlptdg6iymka@jpeg"
+      :avatar="{image: 'https://cdn.bsky.app/img/avatar/plain/did:plc:iaf5ejdchj6nydfxmcrq5rm6/bafkreicmdm2vftqug6n36azkzpvo3hyt6rnv4c5xd2ykmmnlptdg6iymka@jpeg'}"
     />
     <BaseAvatar
-      :icon="{name: 'mdi:home', size: 24}"
+      :avatar="{icon: {name: 'mdi:home', size: 24}}"
     />
   </div>
 </template>

@@ -4,18 +4,20 @@ import {computed} from 'vue';
 
 const props = defineProps<{
   title?: string;
-  letter?: string;
-  image?: string;
-  icon?: {
-    name?: string;
-    size?: number;
-  };
+  avatar?: {
+    letter?: string;
+    image?: string;
+    icon?: {
+      name?: string;
+      size?: number;
+    };
+  }
   link?: string;
 }>();
 
 const displayLetter = computed(() => {
-  if (props.letter) {
-    return props.letter
+  if (props.avatar?.letter) {
+    return props.avatar?.letter
   }
 
   if (props.title) {
@@ -29,8 +31,8 @@ const displayLetter = computed(() => {
 <template>
   <v-avatar :title="title">
 
-    <Icon v-if="icon?.name" v-bind="icon"/>
-    <img v-else-if="image" :src="image" :alt="title" loading="lazy"/>
+    <Icon v-if="avatar?.icon?.name" v-bind="avatar?.icon"/>
+    <img v-else-if="avatar?.image" :src="avatar?.image" :alt="title" loading="lazy"/>
     <span v-else v-text="displayLetter"/>
 
     <nuxt-link
