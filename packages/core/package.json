@@ -4,5 +4,10 @@
   "author": {
     "name": "Gridsky Labs",
     "url": "https://github.com/gridsky-app"
+  },
+  "dependencies": {
+    "@vueuse/components": "^13.1.0",
+    "@vueuse/core": "^13.1.0",
+    "@vueuse/nuxt": "^13.1.0"
   }
 }
