@@ -6,6 +6,9 @@
     "url": "https://github.com/gridsky-app"
   },
   "dependencies": {
+    "@atproto/api": "^0.15.5",
+    "@atproto/lexicon": "^0.4.10",
+    "@atproto/oauth-client-browser": "^0.3.15",
     "@vueuse/components": "^13.1.0",
     "@vueuse/core": "^13.1.0",
     "@vueuse/nuxt": "^13.1.0"
