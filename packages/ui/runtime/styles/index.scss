@@ -1,0 +1,19 @@
+@use 'sanitize.css';
+
+html {
+  background: rgb(var(--v-theme-background));
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1.6667;
+
+  @media(max-width: 599px) {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  @media(max-width: 399px) {
+    font-size: 13px;
+    letter-spacing: -0.05px;
+    line-height: 1.4;
+  }
+}

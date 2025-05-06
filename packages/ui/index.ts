@@ -7,9 +7,18 @@ export default defineNuxtModule({
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
 
-    await installModule('@nuxt/icon')
+    {
 
-    await installModule('vuetify-nuxt-module')
+      nuxt.options.css.push(resolve('./runtime/styles/index.scss'))
+
+    }
+
+    {
+
+      await installModule('@nuxt/icon')
+      await installModule('vuetify-nuxt-module')
+
+    }
 
     addComponentsDir({
       path: resolve('./runtime/components')
