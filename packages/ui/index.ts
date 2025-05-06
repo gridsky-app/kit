@@ -66,7 +66,9 @@ export default defineNuxtModule({
 
     {
 
+      await installModule('@nuxt/fonts')
       await installModule('@nuxt/icon')
+      await installModule('nuxt-swiper')
 
     }
 
