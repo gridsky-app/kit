@@ -1,14 +1,16 @@
-import {defineNuxtModule, createResolver, addComponentsDir, addPlugin, addImportsDir, installModule} from '@nuxt/kit';
+import {defineNuxtModule, installModule} from '@nuxt/kit';
 
 export default defineNuxtModule({
   meta: {
     name: '@gridsky/core'
   },
-  async setup(options, nuxt) {
+  async setup() {
 
     {
 
+      await installModule('@pinia/nuxt')
       await installModule('@vueuse/nuxt')
+      await installModule('pinia-plugin-persistedstate/nuxt')
 
     }
 
