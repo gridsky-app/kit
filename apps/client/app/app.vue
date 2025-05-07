@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import {useAppPreferencesStore} from "./stores/useAppPreferencesStore";
 
+const appPreferencesStore = useAppPreferencesStore()
 </script>
 
 <template>
   <v-app>
+    <AppToolGuides :enabled="appPreferencesStore.helperGuides" />
     <NuxtLayout />
   </v-app>
 </template>

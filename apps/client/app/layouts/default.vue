@@ -1,6 +1,12 @@
+<script setup lang="ts">
+import {useAppPreferencesStore} from "../stores/useAppPreferencesStore";
+
+const appPreferencesStore = useAppPreferencesStore()
+</script>
+
 <template>
   <v-card
-    :rounded="false"
+    :rounded="appPreferencesStore.layoutRounded"
     :width="480"
     :height="480"
     color="transparent"

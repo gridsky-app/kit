@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "nuxt": "^3.10.0",
+    "@gridsky/core": "^0.0.1",
     "@gridsky/ui": "^0.0.1"
   }
 }

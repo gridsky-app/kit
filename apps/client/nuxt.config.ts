@@ -4,10 +4,12 @@ import { defineNuxtConfig } from 'nuxt/config';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   workspaceDir: '../../',
+  ssr: false,
   future: {
     compatibilityVersion: 4
   },
   modules: [
+    "@gridsky/core",
     "@gridsky/ui"
   ],
   devtools: { enabled: true },
