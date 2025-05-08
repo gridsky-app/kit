@@ -10,38 +10,7 @@ const appPreferencesStore = useAppPreferencesStore()
     </div>
 
     <div class="text-center">
-
-      <v-row no-gutters class="mx-15">
-        <v-col :cols="6" class="gsky-home-block__logo">
-
-          <swiper-container
-            slides-per-view="1"
-            loop="1"
-            autoplay-delay="5000"
-            class="fill-height"
-          >
-            <swiper-slide>
-              <Icon name="lucide:grid-3x3" :size="94"/>
-            </swiper-slide>
-            <swiper-slide>
-              <Icon name="lucide:sparkles" :size="88"/>
-            </swiper-slide>
-            <swiper-slide>
-              <Icon name="simple-icons:bluesky" :size="88"/>
-            </swiper-slide>
-            <swiper-slide>
-              <Icon name="lucide:at-sign" :size="88"/>
-            </swiper-slide>
-          </swiper-container>
-
-        </v-col>
-        <v-col :cols="6" class="gsky-home-block__supporters">
-
-          <HomeSupporterGallery/>
-
-        </v-col>
-      </v-row>
-
+      <HomeHero/>
     </div>
 
   </div>
