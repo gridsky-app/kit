@@ -6,13 +6,7 @@ const appPreferencesStore = useAppPreferencesStore()
   <div class="gsky-page-index">
 
     <div>
-
-      <AppLogo/>
-
-      <div class="gsky-logo__pocket text-overline">
-        Pocket
-      </div>
-
+      <LogoPocket/>
     </div>
 
     <div class="text-center">
@@ -90,58 +84,15 @@ const appPreferencesStore = useAppPreferencesStore()
   }
 
   > div {
+    position: relative;
+    z-index: 2;
+
     &:nth-child(1) {
-      position: relative;
       height: 50%;
     }
 
     &:nth-child(2) {
       height: 50%;
-    }
-  }
-}
-
-.gsky-logo {
-  position: absolute;
-  top: 16%;
-  left: -9%;
-  transform: scale(0.7);
-  opacity: 0.12;
-
-  &__pocket {
-    position: absolute;
-    top: 154px;
-    left: 71.5%;
-    transform: translateX(-50%);
-    height: 28px;
-    line-height: 28px;
-    font-size: 12px !important;
-    opacity: 0.35;
-  }
-}
-
-.gsky-home-block {
-  &__logo {
-    position: relative;
-
-    .iconify {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  &__supporters {
-    position: relative;
-  }
-
-  swiper-container {
-    width: 100%;
-
-    swiper-slide {
-      width: 100%;
-      text-align: center;
     }
   }
 }
