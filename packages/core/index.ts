@@ -8,8 +8,10 @@ export default defineNuxtModule({
 
     {
 
+      await installModule('@nuxtjs/i18n')
       await installModule('@pinia/nuxt')
       await installModule('@vueuse/nuxt')
+      await installModule('nuxt-route-meta')
       await installModule('pinia-plugin-persistedstate/nuxt')
 
     }
