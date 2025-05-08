@@ -41,7 +41,7 @@ defineProps<{
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(72px);
+    backdrop-filter: blur(96px);
     z-index: 0;
     content: '';
   }

@@ -5,32 +5,43 @@ const appPreferencesStore = useAppPreferencesStore()
 </script>
 
 <template>
-  <v-card
-    :rounded="appPreferencesStore.layoutRounded"
-    :width="480"
-    :height="480"
-    color="black"
-  >
-    <NuxtPage/>
-  </v-card>
+  <div class="gsky-pocket">
+
+    <v-card
+      :rounded="appPreferencesStore.layoutRounded"
+      :width="480"
+      :height="480"
+      class="gsky-pocket__card"
+      color="black"
+    >
+      <NuxtPage/>
+    </v-card>
+
+    <AppPageLoader
+      v-if="$route.meta.showLoader"
+    />
+
+  </div>
 </template>
 
 <style scoped lang="scss">
-.v-card {
+.gsky-pocket {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 1px rgba(var(--v-theme-on-background), 0.1);
-  transition: border-radius 0.2s;
   z-index: 1;
-}
 
-@media(width: 960px) and (height: 960px) {
   .v-card {
-    zoom: 2;
-    box-shadow: none;
-    border-radius: 0 !important;
+    border-radius: 72px;
+    transition: border-radius 0.2s;
+    box-shadow: 0 0 0 1px rgba(var(--v-theme-on-background), 0.2), 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+
+    @media(width: 960px) and (height: 960px) {
+      zoom: 2;
+      box-shadow: none;
+      border-radius: 0 !important;
+    }
   }
 }
 </style>

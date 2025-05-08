@@ -38,7 +38,7 @@ const appPreferencesStore = useAppPreferencesStore()
     background-image: var(--gsky-background-image);
     background-size: cover;
     background-position: center;
-    opacity: 0.25;
+    opacity: 0.4;
     content: '';
   }
 
@@ -48,6 +48,8 @@ const appPreferencesStore = useAppPreferencesStore()
     left: 0;
     width: 100%;
     height: 100%;
+    backdrop-filter: blur(64px);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 100%);
     content: '';
     z-index: 1;
   }
