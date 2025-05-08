@@ -38,31 +38,35 @@ withDefaults(defineProps<{
 
       <v-col class="gsky-card-item__content flex-grow-1">
 
-        <BaseCardItemTitle
-          :title="title"
-          :link="!linkFull ? link : undefined"
-        >
+        <div>
+          <BaseCardItemTitle
+            :title="title"
+            :link="!linkFull ? link : undefined"
+          >
 
-          <template v-if="$slots.title">
-            <slot name="title"/>
-          </template>
+            <template v-if="$slots.title">
+              <slot name="title"/>
+            </template>
 
-          <template #append>
-            <slot name="title-append"/>
-          </template>
+            <template #append>
+              <slot name="title-append"/>
+            </template>
 
-        </BaseCardItemTitle>
+          </BaseCardItemTitle>
+        </div>
 
-        <BaseCardItemSubtitle
-          :subtitle="subtitle"
-          :link="!linkFull ? link : undefined"
-        >
+        <div>
+          <BaseCardItemSubtitle
+            :subtitle="subtitle"
+            :link="!linkFull ? link : undefined"
+          >
 
-          <template v-if="$slots.subtitle">
-            <slot name="subtitle"/>
-          </template>
+            <template v-if="$slots.subtitle">
+              <slot name="subtitle"/>
+            </template>
 
-        </BaseCardItemSubtitle>
+          </BaseCardItemSubtitle>
+        </div>
 
       </v-col>
 
@@ -85,6 +89,7 @@ withDefaults(defineProps<{
 .gsky-card-item {
   position: relative;
   min-height: 48px;
+  line-height: 14px;
 
   a {
     position: absolute;

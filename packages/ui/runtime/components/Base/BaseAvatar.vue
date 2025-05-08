@@ -18,7 +18,7 @@ const props = defineProps<{
 
 const displayLetter = computed(() => {
   if (props.avatar?.letter) {
-    return props.avatar?.letter
+    return getAvatarLetter(props.avatar?.letter)
   }
 
   if (props.title) {
@@ -31,7 +31,9 @@ const displayLetter = computed(() => {
 
 <template>
   <v-avatar
+    class="gsky-avatar"
     :title="title"
+    border
   >
 
     <Icon v-if="avatar?.icon?.name" v-bind="avatar?.icon"/>
@@ -46,9 +48,19 @@ const displayLetter = computed(() => {
 </template>
 
 <style scoped lang="scss">
-img {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
+.gsky-avatar {
+  img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+  }
+
+  a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

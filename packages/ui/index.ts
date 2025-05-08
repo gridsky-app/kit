@@ -9,6 +9,18 @@ export default defineNuxtModule({
 
     {
 
+      // import components
+
+      addComponentsDir({
+        path: resolve('./runtime/components')
+      })
+
+    }
+
+    {
+
+      // configure vuetify
+
       nuxt.hook('vuetify:registerModule', register => register({
         moduleOptions: {
           styles: 'sass',
@@ -66,15 +78,33 @@ export default defineNuxtModule({
 
     {
 
+      // nuxt i18n module
+
+      nuxt.hook('i18n:registerModule', register => {
+        register({
+          // langDir path needs to be resolved
+          langDir: resolve('./i18n'),
+          locales: [
+            {
+              code: 'en',
+              file: 'locales/en.ts',
+            },
+          ]
+        })
+      })
+
+    }
+
+    {
+
+      // nuxt modules
+
+      await installModule('@nuxtjs/i18n')
       await installModule('@nuxt/fonts')
       await installModule('@nuxt/icon')
       await installModule('nuxt-swiper')
 
     }
-
-    addComponentsDir({
-      path: resolve('./runtime/components')
-    });
 
   }
 });

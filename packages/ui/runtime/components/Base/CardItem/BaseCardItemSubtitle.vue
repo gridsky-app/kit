@@ -22,6 +22,7 @@ defineProps<{
 <style scoped lang="scss">
 .gsky-card-item-subtitle {
   position: relative;
+  display: inline-block;
   height: 18px;
   line-height: 20px;
   margin-bottom: 6px;
