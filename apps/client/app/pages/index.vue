@@ -13,43 +13,36 @@
 
     <div class="text-center">
 
-      <v-card color="transparent" class="gsky-home-block mx-8" rounded="xl">
-        <v-row no-gutters class="fill-height">
-          <v-col :cols="6" class="gsky-home-block__logo">
+      <v-row no-gutters class="mx-15">
+        <v-col :cols="6" class="gsky-home-block__logo">
 
-            <v-sheet
-              class="bg-black"
-              height="100%"
-            >
-              <swiper-container
-                slides-per-view="1"
-                loop="1"
-                autoplay-delay="5000"
-                class="fill-height"
-              >
-                <swiper-slide>
-                  <Icon name="lucide:grid-3x3" :size="94"/>
-                </swiper-slide>
-                <swiper-slide>
-                  <Icon name="lucide:sparkles" :size="88"/>
-                </swiper-slide>
-                <swiper-slide>
-                  <Icon name="simple-icons:bluesky" :size="88"/>
-                </swiper-slide>
-                <swiper-slide>
-                  <Icon name="lucide:at-sign" :size="88"/>
-                </swiper-slide>
-              </swiper-container>
-            </v-sheet>
+          <swiper-container
+            slides-per-view="1"
+            loop="1"
+            autoplay-delay="5000"
+            class="fill-height"
+          >
+            <swiper-slide>
+              <Icon name="lucide:grid-3x3" :size="94"/>
+            </swiper-slide>
+            <swiper-slide>
+              <Icon name="lucide:sparkles" :size="88"/>
+            </swiper-slide>
+            <swiper-slide>
+              <Icon name="simple-icons:bluesky" :size="88"/>
+            </swiper-slide>
+            <swiper-slide>
+              <Icon name="lucide:at-sign" :size="88"/>
+            </swiper-slide>
+          </swiper-container>
 
-          </v-col>
-          <v-col :cols="6" class="gsky-home-block__supporters">
+        </v-col>
+        <v-col :cols="6" class="gsky-home-block__supporters">
 
-            <HomeSupporterGallery />
+          <HomeSupporterGallery/>
 
-          </v-col>
-        </v-row>
-      </v-card>
+        </v-col>
+      </v-row>
 
     </div>
 
@@ -80,7 +73,7 @@
   top: 16%;
   left: -9%;
   transform: scale(0.7);
-  opacity: 0.15;
+  opacity: 0.12;
 
   &__pocket {
     position: absolute;
@@ -90,20 +83,11 @@
     height: 28px;
     line-height: 28px;
     font-size: 12px !important;
-    opacity: 0.4;
+    opacity: 0.35;
   }
 }
 
-.gsky-footer {
-  opacity: 0.25;
-}
-
 .gsky-home-block {
-  display: inline-block;
-  margin: 0 auto;
-  height: 180px;
-  aspect-ratio: 2/1;
-
   &__logo {
     position: relative;
 

@@ -30,7 +30,9 @@ const displayLetter = computed(() => {
 </script>
 
 <template>
-  <v-avatar :title="title">
+  <v-avatar
+    :title="title"
+  >
 
     <Icon v-if="avatar?.icon?.name" v-bind="avatar?.icon"/>
     <img v-else-if="avatar?.image" :src="avatar?.image" :alt="title" loading="lazy"/>

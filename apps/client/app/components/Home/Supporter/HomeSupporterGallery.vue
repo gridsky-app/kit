@@ -82,7 +82,6 @@ onUnmounted(() => {
 <template>
   <v-card
     class="fill-height"
-    color="transparent"
     rounded="xl"
   >
     <v-row
