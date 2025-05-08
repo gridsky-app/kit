@@ -1,5 +1,5 @@
 import {onKeyStroke} from '@vueuse/core'
-import {useAppPreferencesStore} from "../stores/useAppPreferencesStore";
+import {useAppPreferencesStore} from "../stores/storeAppPreferences";
 
 export default defineNuxtPlugin({
   async setup(nuxtApp) {
@@ -24,6 +24,16 @@ export default defineNuxtPlugin({
         e.preventDefault()
 
         appPreferencesStore.toggleHelperGuides()
+      })
+
+      onKeyStroke(['b', 'B'], (e) => {
+        if (document.activeElement !== document.body) {
+          return false
+        }
+
+        e.preventDefault()
+
+        appPreferencesStore.toggleHomePageBackground()
       })
 
     })

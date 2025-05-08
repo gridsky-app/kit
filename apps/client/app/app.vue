@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useAppPreferencesStore} from "./stores/useAppPreferencesStore";
+import {useAppPreferencesStore} from "./stores/storeAppPreferences";
 
 const appPreferencesStore = useAppPreferencesStore()
 </script>
@@ -12,7 +12,7 @@ const appPreferencesStore = useAppPreferencesStore()
 </template>
 
 <style lang="scss">
-.v-application {
-  background: rgb(0, 0, 0) !important;
+:root {
+  --gsky-background-image: url('https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:xdkwk57ojt7qs5v2ztoulxgi/bafkreib5pldzoecvxclsjndrgg6rwa4lhgi5hgiywzlaxb3pvkijwxqixi@jpeg');
 }
 </style>

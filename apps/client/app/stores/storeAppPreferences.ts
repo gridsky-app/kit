@@ -5,7 +5,6 @@ type AppPreferenceLayoutRounded = false | 'lg' | 'xl'
 
 export const useAppPreferencesStore = defineStore("app/preferences", () => {
   const layoutRounded = ref<AppPreferenceLayoutRounded>(false)
-  const helperGuides = ref<boolean>(false)
 
   function changeLayoutRounded() {
     const modes: AppPreferenceLayoutRounded[] = [false, 'lg', 'xl']
@@ -14,15 +13,25 @@ export const useAppPreferencesStore = defineStore("app/preferences", () => {
     layoutRounded.value = modes[nextIndex] as AppPreferenceLayoutRounded
   }
 
+  const helperGuides = ref<boolean>(false)
+
   function toggleHelperGuides() {
     helperGuides.value = !helperGuides.value
   }
 
+  const homePageBackground = ref<boolean>(false)
+
+  function toggleHomePageBackground() {
+    homePageBackground.value = !homePageBackground.value
+  }
+
   return {
     layoutRounded,
-    helperGuides,
     changeLayoutRounded,
+    helperGuides,
     toggleHelperGuides,
+    homePageBackground,
+    toggleHomePageBackground,
   }
 }, {
   persist: {storage: window.localStorage}

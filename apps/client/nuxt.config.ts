@@ -5,24 +5,36 @@ import { defineNuxtConfig } from 'nuxt/config';
 export default defineNuxtConfig({
   workspaceDir: '../../',
   ssr: false,
+
   future: {
     compatibilityVersion: 4
   },
+
+  css: [
+    './app/styles/index.scss',
+  ],
+
   modules: [
     "@gridsky/core",
     "@gridsky/ui"
   ],
-  devtools: { enabled: true },
+
+  imports: {
+    autoImport: true,
+  },
+
+  vite: {
+    plugins: [nxViteTsPaths()],
+  },
+
   typescript: {
     typeCheck: true,
     tsConfig: {
       extends: '../tsconfig.app.json', // Nuxt copies this string as-is to the `./.nuxt/tsconfig.json`, therefore it needs to be relative to that directory
     },
   },
-  imports: {
-    autoImport: true,
-  },
-  vite: {
-    plugins: [nxViteTsPaths()],
+
+  devtools: {
+    enabled: false
   },
 });
