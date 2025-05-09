@@ -1,24 +1,27 @@
 <script setup lang="ts">
 import {computed} from "vue";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   thread: any
   forceAspectRatio?: number
   scrollable?: boolean
   showType?: boolean
-  album: {
+  album?: {
     navigation?: boolean
     mousewheel?: boolean
   }
-  video: {
+  video?: {
     playable?: boolean
     autoplay?: boolean
     showVolume?: boolean
     loop?: boolean
     reel?: boolean
   }
-  performance: MediaPropsPerformance
-}>()
+  performance?: MediaPropsPerformance
+}>(), {
+  album: {},
+  performance: {},
+})
 
 const emit = defineEmits(['ready'])
 
