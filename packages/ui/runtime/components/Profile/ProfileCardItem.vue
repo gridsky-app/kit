@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {computed} from "vue";
-import {makeHandleShort, routeProfile} from "@gridsky/core/runtime/utils/utilProfile"
+import {makeHandleShort} from "@gridsky/core/runtime/utils/utilProfile"
+import {routeProfile} from "@gridsky/core/runtime/utils/utilRoute"
 
 const props = withDefaults(defineProps<{
   profile: any

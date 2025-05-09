@@ -14,6 +14,10 @@ export default defineNuxtConfig({
     './app/styles/index.scss',
   ],
 
+  i18n: {
+    strategy: 'no_prefix',
+  },
+
   modules: [
     "@gridsky/core",
     "@gridsky/ui"

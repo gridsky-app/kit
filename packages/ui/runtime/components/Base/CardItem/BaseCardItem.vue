@@ -25,7 +25,7 @@ withDefaults(defineProps<{
 
     <v-row no-gutters>
 
-      <v-col v-if="avatar" class="gsky-card-item__avatar flex-grow-0 mr-2" align-self="center">
+      <v-col v-if="avatar" class="gsky-card-item__avatar flex-grow-0 mr-3" align-self="center">
 
         <slot name="avatar">
           <BaseAvatar

@@ -6,8 +6,11 @@ const appPreferencesStore = useAppPreferencesStore()
 
 <template>
   <v-app>
+
     <AppToolGuides :enabled="appPreferencesStore.helperGuides" />
+
     <NuxtLayout />
+
   </v-app>
 </template>
 
