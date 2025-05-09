@@ -3,11 +3,11 @@ import {AuthorModel} from "./AuthorModel";
 import {ThreadEmbedModel} from "./ThreadEmbedModel";
 import {useAgent} from "../composables/useAgent";
 
-export class GridskyThread {
+export class ThreadModel {
   public post = {}
   public feedContext
 
-  public replies = ref<GridskyThread[]>([])
+  public replies = ref<ThreadModel[]>([])
   public repliesLoaded = false
 
   public updatedAt = Date.now()
@@ -128,13 +128,13 @@ export class GridskyThread {
 
   /**
    * Updates the list of thread replies by transforming the input replies
-   * into instances of the GridskyThread and sets them to the replies property
+   * into instances of the ThreadModel and sets them to the replies property
    */
   private updateThreadReplies(replies: BskyThread[]) {
     const repliesTemp = []
 
     for (const reply of replies) {
-      repliesTemp.push(new GridskyThread(reply))
+      repliesTemp.push(new ThreadModel(reply))
     }
 
     this.replies.value = repliesTemp
@@ -169,7 +169,7 @@ export class GridskyThread {
   /**
    * Deletes a specific reply from a thread and updates the thread replies
    */
-  public async deleteThreadReply(thread: GridskyThread) {
+  public async deleteThreadReply(thread: ThreadModel) {
     this.replies.value = this.replies.value.filter(reply => {
       return reply.post.uri !== thread.post.uri
     })
