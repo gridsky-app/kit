@@ -1,29 +1,26 @@
 <script setup lang="ts">
-const appPreferencesStore = useAppPreferencesStore()
 </script>
 
 <template>
-  <div class="gsky-page-index">
+  <PocketLayout>
 
-    <div>
-      <LogoPocket/>
+    <div class="gsky-pocket-index">
+
+      <div>
+        <LogoPocket/>
+      </div>
+
+      <div class="text-center">
+        <HomeHero/>
+      </div>
+
     </div>
 
-    <div class="text-center">
-      <HomeHero/>
-    </div>
-
-  </div>
-
-  <teleport to="body">
-    <HomePageBackground
-      :enabled="appPreferencesStore.homePageBackground"
-    />
-  </teleport>
+  </PocketLayout>
 </template>
 
 <style scoped lang="scss">
-.gsky-page-index {
+.gsky-pocket-index {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -54,7 +51,7 @@ const appPreferencesStore = useAppPreferencesStore()
     z-index: 1;
   }
 
-  > div {
+  div {
     position: relative;
     z-index: 2;
 
