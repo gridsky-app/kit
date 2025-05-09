@@ -1,5 +1,5 @@
 import {ref, reactive} from 'vue'
-import {AuthorModel} from "./AuthorModel";
+import {ProfileModel} from "./ProfileModel";
 import {ThreadEmbedModel} from "./ThreadEmbedModel";
 import {useAgent} from "../composables/useAgent";
 
@@ -53,7 +53,7 @@ export class ThreadModel {
     this.post.uri = post.uri
     this.post.record = post.record
     this.post.record.createdAt = post.record.createdAt
-    this.post.author = new AuthorModel(post.author)
+    this.post.author = new ProfileModel(post.author)
 
     this.post.likeCount = post.likeCount
     this.post.replyCount = post.replyCount

@@ -1,4 +1,4 @@
-export class AuthorModel {
+export class ProfileModel {
     public avatar: string
     public createdAt: string
     public did: string
