@@ -9,6 +9,8 @@ defineProps<{
     <v-card class="gsky-thread-layout-pocket__media" rounded="xl">
       <Media
         :thread="thread"
+        :album="{direction: 'vertical'}"
+        :force-aspect-ratio="1"
       />
     </v-card>
 
@@ -26,6 +28,10 @@ defineProps<{
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   border-bottom: none;
+
+  :deep(swiper-container) {
+    aspect-ratio: 1;
+  }
 }
 
 :deep(.gsky-thread-detail__actions) {

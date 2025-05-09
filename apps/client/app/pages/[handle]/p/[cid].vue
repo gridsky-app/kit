@@ -37,9 +37,7 @@ definePageMeta({
 </script>
 
 <template>
-  <PocketLayoutProfile
-    :color="profileStore.appearance.theme.colorPrimary"
-  >
+  <PocketLayoutProfile>
 
     <template #header>
       <ProfileCardItem

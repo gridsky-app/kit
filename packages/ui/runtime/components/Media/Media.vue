@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<{
   album?: {
     navigation?: boolean
     mousewheel?: boolean
+    direction?: 'horizontal'|'vertical'
   }
   video?: {
     playable?: boolean
@@ -86,6 +87,7 @@ function onMediaReady() {
           :thread="thread"
           :aspect-ratio="aspectRatio"
           :navigation="album.navigation"
+          :direction="album.direction"
           :mousewheel="album.mousewheel"
           @ready="onMediaReady"
       />

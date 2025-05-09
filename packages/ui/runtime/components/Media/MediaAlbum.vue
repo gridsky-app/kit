@@ -4,6 +4,7 @@ defineProps<{
   aspectRatio?: number
   cover?: boolean
   navigation?: boolean
+  direction: 'horizontal'|'vertical'
   mousewheel?: boolean
 }>()
 
@@ -19,7 +20,7 @@ function onMediaImageReady(index: number) {
 <template>
   <div class="gsky-media__album">
     <swiper-container
-        direction="horizontal"
+        :direction="direction"
         :navigation="navigation && $vuetify.display.smAndUp"
         :pagination="navigation"
         :mousewheel="mousewheel"

@@ -19,10 +19,12 @@ const appPreferencesStore = useAppPreferencesStore()
       <slot/>
     </v-card>
 
-    <AppPageLoader
-      v-if="$route.meta.showLoader && !appPageStore.pageLoaded"
-      :message="appPageStore.pageLoadingMessage"
-    />
+    <v-fade-transition>
+      <AppPageLoader
+          v-if="$route.meta.showLoader && !appPageStore.pageLoaded"
+          :message="appPageStore.pageLoadingMessage"
+      />
+    </v-fade-transition>
 
   </div>
 </template>

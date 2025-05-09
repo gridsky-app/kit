@@ -39,6 +39,6 @@ const appPageStore = useAppPageStore()
   left: 64px;
   right: 64px;
   aspect-ratio: 1;
-  overflow: initial;
+  //overflow: initial;
 }
 </style>
