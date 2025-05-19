@@ -1,11 +1,12 @@
 {
   "name": "@gridsky/kit",
-  "version": "0.0.0",
-  "scripts": {},
   "private": true,
   "author": {
     "name": "Gridsky Labs",
     "url": "https://github.com/gridsky-app"
+  },
+  "scripts": {
+    "dev": "nx run pocket:serve"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
