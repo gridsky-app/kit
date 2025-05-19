@@ -60,6 +60,33 @@
   "targetDefaults": {
     "test": {
       "dependsOn": ["^build"]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  },
+  "release": {
+    "projectsRelationship": "independent",
+    "changelog": {
+      "automaticFromRef": true,
+      "projectChangelogs": {
+        "renderOptions": {
+          "authors": true,
+          "commitReferences": true,
+          "versionTitleDate": true,
+          "applyUsernameToAuthors": true
+        }
+      },
+      "workspaceChangelog": {
+        "renderOptions": {
+          "authors": true,
+          "commitReferences": true,
+          "versionTitleDate": true,
+          "applyUsernameToAuthors": true
+        }
+      }
     }
   }
 }
