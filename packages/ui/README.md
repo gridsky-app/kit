@@ -35,8 +35,12 @@ The main Gridsky App isn't open source yet — we're working on a compact versio
 
 ```bash
 # fork these two repositories
-# https://github.com/gridsky-app/kit (name it "gridsky-playground")
-# https://github.com/gridsky-app/pocket (leave it "pocket")
+
+# https://github.com/gridsky-app/kit
+# (name it "gridsky-playground")
+
+# https://github.com/gridsky-app/pocket
+# (leave it "pocket")
 
 # clone your gridsky kit fork 
 git clone git@github.com:<username>/gridsky-playground.git
