@@ -1,6 +1,7 @@
 {
   "name": "@gridsky/core",
   "version": "0.0.1",
+  "license": "MIT",
   "author": {
     "name": "Gridsky Labs",
     "url": "https://github.com/gridsky-app"
