@@ -4,37 +4,43 @@ defineProps<{
   aspectRatio?: number
   cover?: boolean
   navigation?: boolean
-  direction: 'horizontal'|'vertical'
+  direction: 'horizontal' | 'vertical'
   mousewheel?: boolean
 }>()
 
-const emit = defineEmits(['ready'])
+const emit = defineEmits(['ready', 'albumSwiperReady'])
+const swiper = useTemplateRef('swiper')
 
 function onMediaImageReady(index: number) {
   if (index === 0) {
     emit('ready')
   }
 }
+
+onMounted(() => {
+  emit('albumSwiperReady', swiper.value?.swiper)
+})
 </script>
 
 <template>
   <div class="gsky-media__album">
     <swiper-container
-        :direction="direction"
-        :navigation="navigation && $vuetify.display.smAndUp"
-        :pagination="navigation"
-        :mousewheel="mousewheel"
-        loop="true"
+      ref="swiper"
+      :direction="direction"
+      :navigation="navigation && $vuetify.display.smAndUp"
+      :pagination="navigation"
+      :mousewheel="mousewheel"
+      loop="true"
     >
       <swiper-slide
-          v-for="(imageSrc, index) in thread.post.embed.images"
-          v-memo="imageSrc" :key="index"
+        v-for="(imageSrc, index) in thread.post.embed.images"
+        v-memo="imageSrc" :key="index"
       >
         <MediaImage
-            :image="imageSrc"
-            :key="`media:${imageSrc}`"
-            :aspect-ratio="aspectRatio"
-            @ready="onMediaImageReady(index)"
+          :image="imageSrc"
+          :key="`media:${imageSrc}`"
+          :aspect-ratio="aspectRatio"
+          @ready="onMediaImageReady(index)"
         />
       </swiper-slide>
     </swiper-container>

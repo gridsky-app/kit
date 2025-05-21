@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<{
   performance: {},
 })
 
-const emit = defineEmits(['ready'])
+const emit = defineEmits(['ready', 'albumSwiperReady'])
 
 const aspectRatio = computed(() => {
   if (props.forceAspectRatio) {
@@ -89,7 +89,9 @@ function onMediaReady() {
           :navigation="album.navigation"
           :direction="album.direction"
           :mousewheel="album.mousewheel"
+          ref="swiper"
           @ready="onMediaReady"
+          @albumSwiperReady="swiper => $emit('albumSwiperReady', swiper)"
       />
       <MediaImage
           v-else
