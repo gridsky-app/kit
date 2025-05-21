@@ -31,6 +31,9 @@ export default defineNuxtModule({
             defaultTheme: 'dark',
           },
           defaults: {
+            VDialog: {
+              flat: true
+            },
             VBtn: {
               flat: true
             },

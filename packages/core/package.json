@@ -7,21 +7,20 @@
     "url": "https://github.com/gridsky-app"
   },
   "dependencies": {
-    "@atproto/api": "^0.15.5",
-    "@atproto/lexicon": "^0.4.10",
-    "@atproto/oauth-client-browser": "^0.3.15",
-    "@pinia/nuxt": "^0.10.1",
-    "@nuxtjs/i18n": "^9.5.3",
-    "@vueuse/components": "^13.1.0",
-    "@vueuse/core": "^13.1.0",
-    "@vueuse/nuxt": "^13.1.0",
-    "idb": "^8.0.3",
+    "@atproto/lexicon": "^0.4.11",
+    "@nuxtjs/i18n": "^9.5.4",
+    "@pinia/nuxt": "^0.11.0",
+    "@vueuse/components": "^13.2.0",
+    "@vueuse/core": "^13.2.0",
+    "@vueuse/nuxt": "^13.2.0",
     "hls.js": "^1.6.2",
+    "idb": "^8.0.3",
+    "nuxt-atproto": "^0.0.5",
     "nuxt-route-meta": "^5.0.3",
     "pinia": "^3.0.2",
-    "pinia-plugin-persistedstate": "^4.2.0"
+    "pinia-plugin-persistedstate": "^4.3.0"
   },
   "devDependencies": {
-    "@types/hls.js": "^0.13.3"
+    "@types/hls.js": "^1.0.0"
   }
 }

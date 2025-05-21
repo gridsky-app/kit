@@ -7,6 +7,9 @@
       "path": "./apps/client"
     },
     {
+      "path": "./apps/pocket"
+    },
+    {
       "path": "./packages/core"
     },
     {

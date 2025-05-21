@@ -1,6 +1,6 @@
 import {AtpAgent} from "@atproto/api";
-import {useWorkerAgentWithService} from "../utils/utilsWorkerAgent";
-import {workerSlugify} from "../utils/utilsWorkerString";
+import {useWorkerAgentWithService} from "../utils/utilWorkerAgent";
+import {workerSlugify} from "../utils/utilWorkerString";
 import {defaultConfigProfileAppearance, defaultConfigProfileGridList} from "../../consts/app";
 
 export class WorkerModelProfileFetch {

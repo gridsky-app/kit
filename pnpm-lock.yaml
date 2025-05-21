@@ -138,22 +138,22 @@ importers:
   packages/core:
     dependencies:
       '@atproto/lexicon':
-        specifier: ^0.4.10
+        specifier: ^0.4.11
         version: 0.4.11
       '@nuxtjs/i18n':
-        specifier: ^9.5.3
+        specifier: ^9.5.4
         version: 9.5.4(@vue/compiler-dom@3.5.14)(eslint@9.27.0(jiti@2.4.2))(magicast@0.3.5)(rollup@4.41.0)(vue@3.5.14(typescript@5.8.3))
       '@pinia/nuxt':
-        specifier: ^0.10.1
-        version: 0.10.1(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))
+        specifier: ^0.11.0
+        version: 0.11.0(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))
       '@vueuse/components':
-        specifier: ^13.1.0
+        specifier: ^13.2.0
         version: 13.2.0(vue@3.5.14(typescript@5.8.3))
       '@vueuse/core':
-        specifier: ^13.1.0
+        specifier: ^13.2.0
         version: 13.2.0(vue@3.5.14(typescript@5.8.3))
       '@vueuse/nuxt':
-        specifier: ^13.1.0
+        specifier: ^13.2.0
         version: 13.2.0(magicast@0.3.5)(nuxt@3.17.3(@parcel/watcher@2.5.1)(@types/node@22.15.12)(db0@0.3.2)(eslint@9.27.0(jiti@2.4.2))(ioredis@5.6.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.41.0)(sass-embedded@1.89.0)(terser@5.39.2)(tsx@4.19.4)(typescript@5.8.3)(vite@6.3.5(@types/node@22.15.12)(jiti@2.4.2)(sass-embedded@1.89.0)(terser@5.39.2)(tsx@4.19.4)(yaml@2.8.0))(vue-tsc@2.2.10(typescript@5.8.3))(yaml@2.8.0))(vue@3.5.14(typescript@5.8.3))
       hls.js:
         specifier: ^1.6.2
@@ -162,8 +162,8 @@ importers:
         specifier: ^8.0.3
         version: 8.0.3
       nuxt-atproto:
-        specifier: ^0.0.4
-        version: 0.0.4(magicast@0.3.5)
+        specifier: ^0.0.5
+        version: 0.0.5(magicast@0.3.5)
       nuxt-route-meta:
         specifier: ^5.0.3
         version: 5.0.3(magicast@0.3.5)
@@ -171,12 +171,12 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))
       pinia-plugin-persistedstate:
-        specifier: ^4.2.0
-        version: 4.3.0(@pinia/nuxt@0.10.1(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))))(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))
+        specifier: ^4.3.0
+        version: 4.3.0(@pinia/nuxt@0.11.0(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))))(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))
     devDependencies:
       '@types/hls.js':
-        specifier: ^0.13.3
-        version: 0.13.3
+        specifier: ^1.0.0
+        version: 1.0.0
 
   packages/ui:
     dependencies:
@@ -2064,10 +2064,10 @@ packages:
     peerDependencies:
       typescript: ^3 || ^4 || ^5
 
-  '@pinia/nuxt@0.10.1':
-    resolution: {integrity: sha512-xrpkKZHSmshPK6kQzboJ+TZiZ5zj73gBCI5SfiUaJkKKS9gx4B1hLEzJIjxZl0/HS5jRWrIvQ+u9ulvIRlNiow==}
+  '@pinia/nuxt@0.11.0':
+    resolution: {integrity: sha512-QGFlUAkeVAhPCTXacrtNP4ti24sGEleVzmxcTALY9IkS6U5OUox7vmNL1pkqBeW39oSNq/UC5m40ofDEPHB1fg==}
     peerDependencies:
-      pinia: ^3.0.1
+      pinia: ^3.0.2
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -2431,8 +2431,9 @@ packages:
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
 
-  '@types/hls.js@0.13.3':
-    resolution: {integrity: sha512-Po8ZPCsAcPPuf5OODPEkb6cdWJ/w4BdX1veP7IIOc2WG0x1SW4GEQ1+FHKN1AMG2AePJfNUceJbh5PKtP92yRQ==}
+  '@types/hls.js@1.0.0':
+    resolution: {integrity: sha512-EGY2QJefX+Z9XH4PAxI7RFoNqBlQEk16UpYR3kbr82CIgMX5SlMe0PjFdFV0JytRhyVPQCiwSyONuI6S1KdSag==}
+    deprecated: This is a stub types definition. hls.js provides its own type definitions, so you do not need this installed.
 
   '@types/istanbul-lib-coverage@2.0.6':
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
@@ -5802,8 +5803,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nuxt-atproto@0.0.4:
-    resolution: {integrity: sha512-CUg63q70H7FNJUzTXi11oX95xiTz6PQeCB92G9fkwxsHCg7DNN/KkBMFTcopfyuBAN/1qPGL9FCSUzKwT0gh+g==}
+  nuxt-atproto@0.0.5:
+    resolution: {integrity: sha512-8Edzv/HiBTlxr8LeJBdyDO4iLM3MDscfNxLQwhpWoqXrqgzpBm0x53Poo7+lDGj7u+jB3vjoCuC27PHuBMqH6A==}
 
   nuxt-route-meta@5.0.3:
     resolution: {integrity: sha512-Qn71niEzMn1PyS8rSYam2jJJAvHXEua/MwAvFxvsCx2qJhoSE5OLCdS+rOBtHysNaUq4VAHIYmWxL5B/kyWHlQ==}
@@ -10563,7 +10564,7 @@ snapshots:
       esquery: 1.6.0
       typescript: 5.8.3
 
-  '@pinia/nuxt@0.10.1(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))':
+  '@pinia/nuxt@0.11.0(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))':
     dependencies:
       '@nuxt/kit': 3.17.3(magicast@0.3.5)
       pinia: 3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))
@@ -10896,7 +10897,9 @@ snapshots:
     dependencies:
       '@types/node': 22.15.12
 
-  '@types/hls.js@0.13.3': {}
+  '@types/hls.js@1.0.0':
+    dependencies:
+      hls.js: 1.6.2
 
   '@types/istanbul-lib-coverage@2.0.6': {}
 
@@ -14917,7 +14920,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nuxt-atproto@0.0.4(magicast@0.3.5):
+  nuxt-atproto@0.0.5(magicast@0.3.5):
     dependencies:
       '@atproto/api': 0.15.7
       '@atproto/oauth-client-browser': 0.3.16
@@ -15420,14 +15423,14 @@ snapshots:
 
   picomatch@4.0.2: {}
 
-  pinia-plugin-persistedstate@4.3.0(@pinia/nuxt@0.10.1(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))))(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))):
+  pinia-plugin-persistedstate@4.3.0(@pinia/nuxt@0.11.0(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))))(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))):
     dependencies:
       '@nuxt/kit': 3.17.3(magicast@0.3.5)
       deep-pick-omit: 1.2.1
       defu: 6.1.4
       destr: 2.0.5
     optionalDependencies:
-      '@pinia/nuxt': 0.10.1(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))
+      '@pinia/nuxt': 0.11.0(magicast@0.3.5)(pinia@3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3)))
       pinia: 3.0.2(typescript@5.8.3)(vue@3.5.14(typescript@5.8.3))
     transitivePeerDependencies:
       - magicast

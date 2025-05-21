@@ -37,7 +37,6 @@ withDefaults(defineProps<{
       flex-direction: column;
 
       .font-weight-bold {
-        margin-top: 2px;
         margin-left: 1px;
       }
     }

@@ -2,29 +2,27 @@
 defineProps<{
   thread: ThreadModel
 }>()
+
+defineEmits(['albumSwiperReady'])
 </script>
 
 <template>
   <div class="gsky-thread-layout-pocket">
-    <v-card class="gsky-thread-layout-pocket__media" rounded="xl">
+    <v-card class="gsky-thread-layout-pocket__media">
       <Media
         :thread="thread"
         :album="{direction: 'vertical'}"
         :force-aspect-ratio="1"
+        @albumSwiperReady="swiper => $emit('albumSwiperReady', swiper)"
       />
     </v-card>
-
-    <ThreadActionListVertical
-      :thread="thread"
-      show-comments-count
-      show-likes-count
-    />
   </div>
 </template>
 
 <style scoped lang="scss">
 .gsky-thread-layout-pocket__media {
   height: 100%;
+  border-top-left-radius: 0 !important;
   border-bottom-left-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
   border-bottom: none;
@@ -32,13 +30,5 @@ defineProps<{
   :deep(swiper-container) {
     aspect-ratio: 1;
   }
-}
-
-:deep(.gsky-thread-detail__actions) {
-  position: absolute;
-  right: -64px;
-  bottom: 8px;
-  width: 64px;
-  text-align: center;
 }
 </style>

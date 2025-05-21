@@ -154,7 +154,7 @@ export const useProfileStore = function (profileHandle: string) {
         serviceEndpoint: serviceEndpoint.value,
         profile: toRaw(profile.value),
         appearance: undefined,
-        premium: premium.value,
+        premium: toRaw(premium.value),
       }
     })
 
