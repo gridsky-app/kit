@@ -13,6 +13,7 @@ const props = defineProps<{
       class?: string;
     };
   }
+  size?: number;
   link?: string;
 }>();
 
@@ -33,6 +34,7 @@ const displayLetter = computed(() => {
   <v-avatar
     class="gsky-avatar"
     :title="title"
+    :size="size"
     border
   >
 
