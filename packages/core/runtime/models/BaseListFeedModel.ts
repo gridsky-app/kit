@@ -1,11 +1,12 @@
 import {BaseListModel} from "./BaseListModel";
 import {ThreadModel} from "./ThreadModel";
+import {useWorkerFeed} from "../composables/useWorkerFeed"
 import {useAgent} from "../composables/useAgent";
 
 export class BaseListFeedModel extends BaseListModel {
     private readonly indexOffsetLoadMoreBeforeEndReached = 15
 
-    public worker
+    public worker = useWorkerFeed()
 
     public cursor: string | number | undefined = undefined
 
@@ -16,11 +17,6 @@ export class BaseListFeedModel extends BaseListModel {
     }
 
     public async setupWorker() {
-      this.worker = new Worker(
-        new URL('../workers/workerFeedModel.ts', import.meta.url),
-        {type: 'module'}
-      )
-
         this.worker.postMessage({
             type: 'setWorkerConfig',
             config: {
