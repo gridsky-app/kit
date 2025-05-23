@@ -1,6 +1,7 @@
 import {ref, reactive} from 'vue'
 import {ProfileModel} from "./ProfileModel";
 import {ThreadEmbedModel} from "./ThreadEmbedModel";
+import {ThreadReplyHandler} from "./ThreadReplyHandler";
 import {useAgent} from "../composables/useAgent";
 
 export class ThreadModel {
@@ -22,7 +23,11 @@ export class ThreadModel {
     displayEssentialContent: false
   })
 
+  public replyHandler: ThreadReplyHandler;
+
   constructor(data: any | string, index?: number) {
+    this.replyHandler = new ThreadReplyHandler(this)
+
     // sometimes could be useful to have a dummy load.
     // thread will be populated/updated later
     if (typeof data === 'string') {
@@ -204,5 +209,18 @@ export class ThreadModel {
    */
   public setLike(value: boolean) {
     this.flags.hasLike = value
+  }
+
+
+  // selection for profile grids customization
+
+  public selection: any = useThreadSelection()
+
+  // chunks for the gridsky main app
+
+  public chunk: ThreadChunk = {} as ThreadChunk
+
+  public setChunk(chunk: ThreadChunk) {
+    this.chunk = chunk
   }
 }
