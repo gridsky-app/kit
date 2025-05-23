@@ -18,6 +18,7 @@ export class WorkerModelListStorage {
     }
 
     public async getFromStorage(): Promise<any> {
+        // todo rebuild items from uris
         const store = this.db.transaction(this.config.storage.name, 'readonly').store
         const data: ATProtoListWorkerFeedStoredData = await store.get(this.config.storage.key)
 
@@ -25,46 +26,46 @@ export class WorkerModelListStorage {
 
         if (!data || !Array.isArray(data.items)) {
             return {
-                items: [],
-                wasFirstFetch: this.currentPage === 1,
+                isFirstFetch: this.currentPage === 1,
+                isFromCache: true,
                 hasReachedEnd: true,
-                fromCache: true,
-                emptyCache: true,
+                uris: [],
+                cursor: '',
             }
         }
 
         const start = this.currentPage * this.pageSize
         const end = start + this.pageSize
 
-        const itemsPortion = data.items.slice(start, end)
+        const urisPortion = data.uris.slice(start, end)
         this.currentPage++
 
         return {
-            items: itemsPortion,
-            wasFirstFetch: this.currentPage === 1,
+            isFirstFetch: this.currentPage === 1,
+            isFromCache: true,
             hasReachedEnd: data.items.length <= end,
+            uris: urisPortion,
             cursor: data.cursor,
-            fromCache: true,
         }
     }
 
     public async saveItemsToStorage(processedResult: ATProtoListWorkerResult) {
-
         const tx = this.db.transaction(this.config.storage.name, 'readwrite')
         const store = tx.store
 
-        if (processedResult.wasFirstFetch) {
+        const existingDataRecord: ATProtoListWorkerFeedStoredData = await store.get(this.config.storage.key)
+
+        if (processedResult.isFirstFetch || !existingDataRecord) {
             await store.put({
-                items: processedResult.items,
+                uris: processedResult.items.map((rawThread: any) => rawThread.post.uri),
                 updateAd: new Date().toISOString(),
             }, this.config.storage.key)
         } else {
-            const existingDataRecord: ATProtoListWorkerFeedStoredData = await store.get(this.config.storage.key) ?? []
-            await store.put({
+          await store.put({
                 cursor: processedResult.cursor,
-                items: [
-                    ...existingDataRecord.items,
-                    ...processedResult.items,
+                uris: [
+                    ...existingDataRecord.uris,
+                    ...processedResult.items.map((rawThread: any) => rawThread.post.uri),
                 ],
                 updateAd: new Date().toISOString(),
             }, this.config.storage.key)

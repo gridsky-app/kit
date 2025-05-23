@@ -28,19 +28,16 @@ export class WorkerModelListFeedStorage extends WorkerModelListStorage {
         this.db = await openDB<MyDatabase>(config.storage.context, dbVersion)
     }
 
-    public override async saveItemsToStorage(processedResult: ATProtoListWorkerResult) {
+    public override async saveItemsToStorage(processedResult: WorkerFeedListProcessedResult) {
         await super.saveItemsToStorage(processedResult)
-
-        if (this.config.storage && this.config.storage.actions && this.config.storage.actions.storePostsIntoPostsKeyVal) {
-            await this.savePostsIndividually(processedResult.items)
-        }
+        await this.savePostsIndividually(processedResult.items)
     }
 
-    private async savePostsIndividually(posts: any[]) {
+    private async savePostsIndividually(threads: any[]) {
         const tx = this.db.transaction('PostsKeyVal', 'readwrite');
         const store = tx.store
 
-        posts.forEach(thread => {
+        threads.forEach(thread => {
             if (thread?.post?.uri) {
                 store.put(thread, thread.post.uri);
             }

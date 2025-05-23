@@ -44,7 +44,7 @@ export class BaseListModel {
    */
   public clearList() {
     this.isLoading = false
-    this._hasReachedEnd = false
+    this.hasReachedEnd = false
     this._list = []
   }
 

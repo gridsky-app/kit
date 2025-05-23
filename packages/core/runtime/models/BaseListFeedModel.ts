@@ -1,5 +1,6 @@
 import {BaseListModel} from "./BaseListModel";
 import {ThreadModel} from "./ThreadModel";
+import {useFeedChunkLoader} from "../composables/useFeedChunkLoader"
 import {useWorkerFeed} from "../composables/useWorkerFeed"
 import {useAgent} from "../composables/useAgent";
 
@@ -7,42 +8,25 @@ export class BaseListFeedModel extends BaseListModel {
     private readonly indexOffsetLoadMoreBeforeEndReached = 15
 
     public worker = useWorkerFeed()
+    public workerConfig = {
+      parser: {
+        listKey: 'feed',
+      },
+      storage: {
+        context: 'gridsky:common',
+        name: 'Feed',
+        key: this.source['feed']
+      },
+    }
 
     public cursor: string | number | undefined = undefined
+
+    public chunkLoader = useFeedChunkLoader(this)
 
     constructor(source?: any | { feed: string }, options?: any) {
         super(source)
 
-      return this
-    }
-
-    public async setupWorker() {
-        this.worker.postMessage({
-            type: 'setWorkerConfig',
-            config: {
-                fetcher: {
-                    method: 'app.bsky.feed.getFeed',
-                    options: {
-                        limit: 25,
-                        ...this.source,
-                    },
-                },
-                processor: {
-                    listKey: 'feed',
-                },
-                storage: {
-                    context: 'gridsky:common',
-                    name: 'Feed',
-                    key: this.source['feed']
-                },
-            }
-        })
-
-        this.worker.onmessage = (event) => {
-            if (event.data.type === 'fetch') {
-                this.appendItems(event.data.result)
-            }
-        }
+        return this
     }
 
     override async requestItems(resetCursor?: boolean) {
@@ -50,25 +34,34 @@ export class BaseListFeedModel extends BaseListModel {
             this.cursor = undefined
         }
 
-        const response = await useAgent('auto').app.bsky.feed.getFeed({
-            limit: 25,
-            ...this.source,
-            cursor: this.cursor,
-        })
+        return new Promise(async (resolve, reject) => {
+            const response = await useAgent('auto').app.bsky.feed.getFeed({
+              limit: 25,
+              ...this.source,
+              cursor: this.cursor,
+            })
 
-        if (response.data && response.data.cursor) {
-            this.cursor = response.data.cursor
-        }
-
-        this.worker.postMessage({
-            type: 'fetch',
-            meta: {
-                overrideConfig: {
-                    fetcher: {
-                        response
-                    },
-                }
+            if (response.data && response.data.cursor) {
+              this.cursor = response.data.cursor
             }
+
+            this.worker.postMessage({
+              type: 'process',
+              config: this.workerConfig,
+              response
+            })
+
+            this.worker.addEventListener('message', async (e) => {
+              if (e.data.type === 'processed') {
+
+                await this.appendItems(e.data.result)
+
+                this.chunkLoader.preloadNextChunk('BaseListFeedModel')
+
+                resolve(true)
+
+              }
+            }, { once: true })
         })
     }
 
