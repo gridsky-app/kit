@@ -20,7 +20,10 @@ const props = withDefaults(defineProps<{
   }
   performance?: MediaPropsPerformance
 }>(), {
-  album: {},
+  album: {
+    direction: 'horizontal'
+  },
+  video: {},
   performance: {},
 })
 
