@@ -1,4 +1,4 @@
-import {useAgent} from "../composables/useAgent";
+import {useAgent} from "../composables/useAtproto";
 
 export function makeHandleShort(handle: string) {
   return handle.replace('.bsky.social', '')
