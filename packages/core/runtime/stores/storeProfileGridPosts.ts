@@ -1,4 +1,5 @@
 import { ProfilePostsModel } from '../models/ProfilePostsModel.ts'
+import {useListProfilePosts} from "@gridsky/core/runtime/composables/useListProfilePosts";
 
 export const useProfileGridPostsStore = function (profile: BskyProfile, grid: any) {
   return defineStore(`profile/grid/${profile.did}/${grid.name}/posts`, () => {
@@ -9,7 +10,7 @@ export const useProfileGridPostsStore = function (profile: BskyProfile, grid: an
         return
       }
 
-      model.value = new ProfilePostsModel({
+      model.value = useListProfilePosts({
         uris: grid.posts
       }, grid.name)
 

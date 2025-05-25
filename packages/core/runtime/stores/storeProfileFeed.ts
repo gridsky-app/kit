@@ -1,4 +1,5 @@
 import {ProfileFeedModel} from "../models/ProfileFeedModel";
+import {useListProfileFeed} from "@gridsky/core/runtime/composables/useListProfileFeed";
 
 export const useProfileFeedStore = function (
   did: string,
@@ -12,7 +13,7 @@ export const useProfileFeedStore = function (
     function setup() {
       if (model.value) return
 
-      model.value = new ProfileFeedModel({actor: did}, actions)
+      model.value = useListProfileFeed({actor: did}, actions)
       model.value.setupWorker()
     }
 
