@@ -1,4 +1,4 @@
-export function useFeedChunkLoader(model: any) {
+export function useListFeedChunkLoader(baseList: any) {
     const CHUNK_SIZE = 15
 
     const chunkIndex = ref<number>(0)
@@ -19,7 +19,7 @@ export function useFeedChunkLoader(model: any) {
             return false
         }
 
-        return chunks.value[0]?.threads.length === chunks.value[0]?.state.renderedThreads
+        return chunks.value[0]?.threads.length === chunks.value[0]?.renderedThreads.value
     })
 
     const isLastChunkRendered = computed(() => {
@@ -27,33 +27,34 @@ export function useFeedChunkLoader(model: any) {
             return false
         }
 
-        return chunks.value[chunks.value.length - 1]?.state.rendered
+        return chunks.value[chunks.value.length - 1]?.rendered.value
     })
 
     const stillHasMoreChunksToLoad = computed(() => {
-        return listChunkStart.value <= model.list.length
+        return listChunkStart.value <= baseList.list.value.length
     })
 
     async function preloadNextChunk(origin?: string, setChunkAsAlreadyRendered = false): Promise<boolean> {
-        if (model.list.length < listChunkEnd.value && !model.cantLoadMoreItems) {
-            return model.fetchList()
+        if (baseList.list.value.length < listChunkEnd.value && !baseList.cantLoadMoreItems.value) {
+          return baseList.fetchList()
         }
 
-        const chunkThreads = model.list.slice(listChunkStart.value, listChunkEnd.value)
+        const chunkThreads = baseList.list.value.slice(listChunkStart.value, listChunkEnd.value)
 
         function createChunkObject(chunkIndex, chunkThreads) {
+            const renderedThreads = ref(0)
+            const rendered = ref(false)
+
             return {
                 id: chunkIndex,
                 threads: chunkThreads,
-                state: reactive({
-                    renderedThreads: 0,
-                    rendered: false,
-                }),
+                rendered,
+                renderedThreads,
                 incrementChunkMediaLoaded() {
-                    this.state.renderedThreads++;
+                    renderedThreads.value++;
 
-                    if (this.state.renderedThreads === this.threads.length) {
-                        this.state.rendered = true;
+                    if (renderedThreads.value === this.threads.length) {
+                        rendered.value = true;
                     }
                 },
             };
@@ -78,14 +79,16 @@ export function useFeedChunkLoader(model: any) {
     }
 
     async function boot(isRebooting?: boolean) {
-        model.clearList()
+        baseList.clearList()
         clearChunks()
 
         loading.boot = true
 
         if (isRebooting) {
             await new Promise((resolve) => setTimeout(resolve, 800))
-            await model.refetchList()
+            await baseList.refetchList()
+        } else {
+            baseList.fetchList()
         }
     }
 
@@ -96,7 +99,7 @@ export function useFeedChunkLoader(model: any) {
     }
 
     const areThereAnyItemsToLoad = computed(() => {
-        if (listChunkStart.value >= model.list.length) {
+        if (listChunkStart.value >= baseList.list.value.length) {
             return false
         }
 
@@ -108,7 +111,7 @@ export function useFeedChunkLoader(model: any) {
             return false
         }
 
-        if (model.list.length === 0) {
+        if (baseList.list.value.length === 0) {
             return false
         }
 
@@ -136,7 +139,7 @@ export function useFeedChunkLoader(model: any) {
             return true
         }
 
-        if (model.list.length === 0) {
+        if (baseList.list.value.length === 0) {
             return false
         }
 

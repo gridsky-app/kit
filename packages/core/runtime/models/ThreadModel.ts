@@ -2,7 +2,7 @@ import {ref, reactive} from 'vue'
 import {ProfileModel} from "./ProfileModel";
 import {ThreadEmbedModel} from "./ThreadEmbedModel";
 import {ThreadReplyHandler} from "./ThreadReplyHandler";
-import {useAgent} from "../composables/useAgent";
+import {useAgent} from "../composables/useAtproto";
 
 export class ThreadModel {
   public post = {}
@@ -36,7 +36,7 @@ export class ThreadModel {
       }
 
       return
-    }
+    }8
 
     this.parseThreadPost(data.post)
 

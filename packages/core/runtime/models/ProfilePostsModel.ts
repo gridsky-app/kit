@@ -1,5 +1,5 @@
 import {FeedModel} from "./FeedModel";
-import {useAgent} from "../composables/useAgent";
+import {useAgent} from "../composables/useAtproto";
 
 export class ProfilePostsModel extends FeedModel {
     private readonly feedGridKey: string = ''
