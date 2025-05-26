@@ -23,11 +23,11 @@ export function useListFeedChunkLoader(baseList: any) {
     })
 
     const isLastChunkRendered = computed(() => {
-        if (chunks.value.length === 0) {
+      if (chunks.value.length === 0) {
             return false
         }
 
-        return chunks.value[chunks.value.length - 1]?.rendered.value
+        return chunks.value[chunks.value.length - 1]?.rendered
     })
 
     const stillHasMoreChunksToLoad = computed(() => {
@@ -60,7 +60,7 @@ export function useListFeedChunkLoader(baseList: any) {
             };
         }
 
-        const chunk = createChunkObject(chunkIndex.value, chunkThreads)
+        const chunk: ThreadChunk = createChunkObject(chunkIndex.value, chunkThreads)
 
         chunkThreads.forEach(thread => {
             thread.setChunk(chunk)
