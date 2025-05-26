@@ -3,19 +3,11 @@ import { useListCursor } from '@gridsky/core/runtime/composables/useListCursor';
 import { useListFeedWorker } from '@gridsky/core/runtime/composables/useListFeedWorker';
 import { useAgent } from '@gridsky/core/runtime/composables/useAtproto';
 import { ThreadModel } from '@gridsky/core/runtime/models/ThreadModel';
+import {useListFeedChunkLoader} from "@gridsky/core/runtime/composables/useListFeedChunkLoader";
 
 export function useListFeedTimeline(source: { feed: string }) {
-    const baseList = useListBase(source);
-    const { cursor, resetCursor, updateCursor } = useListCursor();
-
     const workerConfig = {
-        fetcher: {
-            method: 'getTimeline',
-            options: {
-                limit: 100,
-            },
-        },
-        processor: {
+        parser: {
             listKey: 'feed',
         },
         storage: {
@@ -25,6 +17,9 @@ export function useListFeedTimeline(source: { feed: string }) {
         },
     };
 
+
+    const baseList = useListBase(source);
+    const { cursor, resetCursor, updateCursor } = useListCursor();
     const { worker, postMessage, listenOnce } = useListFeedWorker(workerConfig);
 
     const _this: any = {
@@ -34,6 +29,10 @@ export function useListFeedTimeline(source: { feed: string }) {
         cursor,
         worker,
     };
+
+    const chunkLoader = useListFeedChunkLoader(_this);
+
+    _this.chunkLoader = chunkLoader
 
     async function requestItems(resetCursorFlag?: boolean) {
         if (resetCursorFlag) {
@@ -49,41 +48,47 @@ export function useListFeedTimeline(source: { feed: string }) {
             updateCursor(response.data.cursor);
         }
 
-        postMessage('fetch', {
-            meta: {
-                overrideConfig: {
-                    fetcher: {
-                        response,
-                    },
-                },
-            },
+        postMessage({
+            type: 'process',
+            config: workerConfig,
+            response
         });
 
         return new Promise((resolve) => {
-            listenOnce('fetch', async (e) => {
-                await appendItems(e.data.result);
-                resolve(true);
-            });
+          listenOnce('processed', async (e) => {
+            await appendItems(e.data.result);
+            chunkLoader.preloadNextChunk('FeedModel');
+            resolve(true);
+          });
         });
     }
 
     async function appendItems(data: { hasReachedEnd: boolean; items: any[] }) {
-        baseList.prepareToAppendItems();
+        baseList.prepareToAppendItems()
 
-        let index = baseList.list.value.length;
+        // convert each item in ThreadModel and populate list
+        const threadsInstanced: ThreadModel[] = []
 
-        const threadsInstanced: ThreadModel[] = data.items.map((item: any) => {
-            return new ThreadModel(item, index++);
-        });
+        let index = baseList.list.value.length
 
-        data.items = threadsInstanced;
+        data.items.forEach((thread: any) => {
+          threadsInstanced.push(
+            new ThreadModel(thread, index)
+          )
+          index++
+        })
 
-        await baseList.appendItems(data);
+        // overwrite items with instanced items
+        data.items = threadsInstanced
+
+        // call parent method to append lists
+        await baseList.appendItems(data)
     }
 
     async function fetchList(restart?: boolean) {
         baseList.isLoading.value = true;
         await requestItems(restart);
+        baseList.isLoading.value = false;
     }
 
     return _this;
