@@ -34,6 +34,7 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
     ...baseList,
     worker,
     fetchList,
+    refetchList,
     requestItems,
     updateUris,
   };
@@ -86,6 +87,11 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
   async function fetchList(restart = false) {
     baseList.isLoading.value = true;
     await requestItems(restart);
+    baseList.isLoading.value = false;
+  }
+
+  async function refetchList() {
+    await fetchList(true);
   }
 
   function updateUris(newUris: string[]) {

@@ -34,6 +34,7 @@ export function useListFeedSearch() {
   const _this: any = {
     ...baseList,
     fetchList,
+    refetchList,
     requestItems,
     cursor,
     worker,
@@ -98,6 +99,10 @@ export function useListFeedSearch() {
     baseList.isLoading.value = true;
     await requestItems(restart);
     baseList.isLoading.value = false;
+  }
+
+  async function refetchList() {
+    await fetchList(true);
   }
 
   function setQuery(newQuery: string) {

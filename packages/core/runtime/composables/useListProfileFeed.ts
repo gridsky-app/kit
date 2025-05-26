@@ -34,6 +34,7 @@ export function useListProfileFeed(
     cursor,
     worker,
     fetchList,
+    refetchList,
     requestItems,
   };
 
@@ -98,10 +99,13 @@ export function useListProfileFeed(
   }
 
   async function fetchList(restart?: boolean) {
-    window.alert('QWE')
     baseList.isLoading.value = true;
     await requestItems(restart);
     baseList.isLoading.value = false;
+  }
+
+  async function refetchList() {
+    await fetchList(true);
   }
 
   return _this;

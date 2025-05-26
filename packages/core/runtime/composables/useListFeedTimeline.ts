@@ -25,6 +25,7 @@ export function useListFeedTimeline(source: { feed: string }) {
     const _this: any = {
         ...baseList,
         fetchList,
+        refetchList,
         requestItems,
         cursor,
         worker,
@@ -89,6 +90,10 @@ export function useListFeedTimeline(source: { feed: string }) {
         baseList.isLoading.value = true;
         await requestItems(restart);
         baseList.isLoading.value = false;
+    }
+
+    async function refetchList() {
+      await fetchList(true);
     }
 
     return _this;
