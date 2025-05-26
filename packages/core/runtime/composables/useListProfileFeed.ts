@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import { useListBase } from './useListBase';
 import { useListCursor } from './useListCursor';
+import { useListNavigation } from './useListNavigation';
 import { useListSelection } from './useListSelection';
 import { useListFeedWorker } from './useListFeedWorker';
 import { useListFeedChunkLoader } from './useListFeedChunkLoader';
@@ -39,10 +40,13 @@ export function useListProfileFeed(
   };
 
   const chunkLoader = useListFeedChunkLoader(_this);
-  const selection = useListSelection(_this);
-
   _this.chunkLoader = chunkLoader;
+
+  const selection = useListSelection(_this);
   _this.selection = selection
+
+  const navigation = useListNavigation(_this)
+  _this.navigation = navigation
 
   async function requestItems(reset?: boolean) {
     if (reset) {

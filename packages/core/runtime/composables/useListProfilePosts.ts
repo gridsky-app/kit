@@ -1,5 +1,6 @@
 import { toRaw } from 'vue';
 import { useListBase } from './useListBase';
+import { useListNavigation } from './useListNavigation';
 import { useListFeedWorker } from './useListFeedWorker';
 import { useAgent } from './useAtproto';
 import {useListFeedChunkLoader} from "@gridsky/core/runtime/composables/useListFeedChunkLoader";
@@ -40,10 +41,13 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
   };
 
   const chunkLoader = useListFeedChunkLoader(_this);
-  const selection = useListSelection(_this);
-
   _this.chunkLoader = chunkLoader
+
+  const selection = useListSelection(_this);
   _this.selection = selection
+
+  const navigation = useListNavigation(_this)
+  _this.navigation = navigation
 
   function getNextPageUris() {
     const startIndex = currentPage * pageSize;

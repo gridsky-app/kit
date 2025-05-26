@@ -1,5 +1,6 @@
 import { useListBase } from '@gridsky/core/runtime/composables/useListBase';
 import { useListCursor } from '@gridsky/core/runtime/composables/useListCursor';
+import { useListNavigation } from '@gridsky/core/runtime/composables/useListNavigation';
 import { useListFeedWorker } from '@gridsky/core/runtime/composables/useListFeedWorker';
 import { useAgent } from '@gridsky/core/runtime/composables/useAtproto';
 import { ThreadModel } from '@gridsky/core/runtime/models/ThreadModel';
@@ -32,8 +33,10 @@ export function useListFeedTimeline(source: { feed: string }) {
     };
 
     const chunkLoader = useListFeedChunkLoader(_this);
-
     _this.chunkLoader = chunkLoader
+
+    const navigation = useListNavigation(_this)
+    _this.navigation = navigation
 
     async function requestItems(resetCursorFlag?: boolean) {
         if (resetCursorFlag) {
