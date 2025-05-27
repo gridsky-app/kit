@@ -5,6 +5,7 @@ import { useListFeedWorker } from './useListFeedWorker';
 import { useAgent } from './useAtproto';
 import {useListFeedChunkLoader} from "@gridsky/core/runtime/composables/useListFeedChunkLoader";
 import {useListSelection} from "@gridsky/core/runtime/composables/useListSelection";
+import {ThreadModel} from "../models/ThreadModel";
 
 export function useListProfilePosts(uris: string[], feedGridKey: string) {
   const baseList = useListBase();
@@ -68,8 +69,9 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
       uris: nextPageUris,
     });
 
-    postMessage('process', {
-      config: toRaw(workerConfig),
+    postMessage({
+      type: 'process',
+      config: workerConfig,
       response,
     });
 
@@ -79,13 +81,35 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
 
         e.data.result.hasReachedEnd = getNextPageUris().length === 0;
 
-        await baseList.appendItems(e.data.result);
+        await appendItems(e.data.result);
 
         chunkLoader.preloadNextChunk('BaseListFeedModel')
 
         resolve(true);
       });
     });
+  }
+
+  async function appendItems(data: { hasReachedEnd: boolean, items: any[] }) {
+    baseList.prepareToAppendItems()
+
+    // convert each item in ThreadModel and populate list
+    const threadsInstanced: ThreadModel[] = []
+
+    let index = baseList.list.value.length
+
+    data.items.forEach((thread: any) => {
+      threadsInstanced.push(
+        new ThreadModel(thread, index)
+      )
+      index++
+    })
+
+    // overwrite items with instanced items
+    data.items = threadsInstanced
+
+    // call parent method to append lists
+    await baseList.appendItems(data)
   }
 
   async function fetchList(restart = false) {

@@ -1,4 +1,3 @@
-import { ProfilePostsModel } from '../models/ProfilePostsModel.ts'
 import {useListProfilePosts} from "@gridsky/core/runtime/composables/useListProfilePosts";
 
 export const useProfileGridPostsStore = function (profile: BskyProfile, grid: any) {
@@ -10,9 +9,7 @@ export const useProfileGridPostsStore = function (profile: BskyProfile, grid: an
         return
       }
 
-      model.value = useListProfilePosts({
-        uris: grid.posts
-      }, grid.name)
+      model.value = useListProfilePosts(grid.posts, grid.name)
 
       model.value.setupWorker()
     }

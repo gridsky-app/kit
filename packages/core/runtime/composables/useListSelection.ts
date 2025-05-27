@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { ThreadModel } from '@gridsky/core/runtime/models/ThreadModel';
 
-export function useListSelection(baseList: any) {
+export function useListSelection(listContext: any) {
   const selectedPostUrisToMarkAsSelected = ref<string[]>([]);
 
   function setPreSelectedPostsList(uris: string[]) {
@@ -9,15 +9,17 @@ export function useListSelection(baseList: any) {
   }
 
   function applyPreSelectionOnThreads() {
-    baseList.list.value.forEach((thread: ThreadModel) => {
-      thread.selection.set(selectedPostUrisToMarkAsSelected.value.includes(thread.post.uri));
+    listContext._list.value.forEach((thread: ThreadModel) => {
+      thread.selection.set(
+        selectedPostUrisToMarkAsSelected.value.includes(thread.post.uri)
+      );
     });
   }
 
   function applyFilterLogicByNotSelected() {
-    return baseList.list.value.filter((thread: ThreadModel) => {
-      return !thread.selection.selected.value
-    });
+    listContext.setFilterLogic((thread: ThreadModel) => {
+      return !thread.selection.selected;
+    })
   }
 
   return {

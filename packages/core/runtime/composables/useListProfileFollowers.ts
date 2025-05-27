@@ -1,29 +1,14 @@
 import { useListBase } from './useListBase';
 import { useListCursor } from './useListCursor';
-import { useListFeedWorker } from './useListFeedWorker';
 import { useAgent } from './useAtproto';
 
 export function useListProfileFollowers(actor: string) {
   const baseList = useListBase();
-
-  const workerConfig = {
-    parser: {
-      listKey: 'followers',
-    },
-    storage: {
-      context: 'gridsky:common',
-      name: 'ProfileFollowers',
-      key: actor,
-    },
-  };
-
   const { cursor, resetCursor, updateCursor } = useListCursor();
-  const { worker, postMessage, listenOnce } = useListFeedWorker(workerConfig);
 
   const _this: any = {
     ...baseList,
     cursor,
-    worker,
     fetchList,
     requestItems,
   };
@@ -40,17 +25,10 @@ export function useListProfileFollowers(actor: string) {
       updateCursor(response.cursor);
     }
 
-    postMessage('process', {
-      config: workerConfig,
-      response,
-    });
-
-    return new Promise((resolve) => {
-      listenOnce('processed', async (e) => {
-        await baseList.appendItems(e.data.result);
-        resolve(true);
-      });
-    });
+    await baseList.appendItems({
+      hasReachedEnd: !cursor.value,
+      items: response.data['followers'],
+    })
   }
 
   async function fetchList(restart?: boolean) {

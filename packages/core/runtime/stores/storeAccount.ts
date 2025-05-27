@@ -37,8 +37,9 @@ export const useAccountStore = defineStore("account", () => {
                 accountPreferencesStore.fetchAccountPreferences(),
                 suggestionProfilesStore.fetchSuggestionProfilesLogged(),
                 accountBookmarkStore.getBookmarksBatch(),
-                threadDraftListStore.fetchDraftList()
             ])
+
+            threadDraftListStore.fetchDraftList()
         }
 
         function restoreAccountCallback() {
