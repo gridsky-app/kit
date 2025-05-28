@@ -117,12 +117,20 @@ export function useThreadModel(initialData: any | string, index?: number) {
     return flags.likesLoaded
   }
 
-  function isLiked() {
+  const isLiked = computed(() => {
     return flags.hasLike
-  }
+  })
 
   function setLike(value: boolean) {
     flags.hasLike = value
+  }
+
+  async function toggleLike() {
+    await toggleThreadLike({
+      post,
+      isLiked: isLiked.value,
+      setLike,
+    })
   }
 
   return {
@@ -148,5 +156,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     areLikesLoaded,
     isLiked,
     setLike,
+    toggleLike,
   }
 }
