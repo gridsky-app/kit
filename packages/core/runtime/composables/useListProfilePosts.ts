@@ -5,7 +5,7 @@ import { useListFeedWorker } from './useListFeedWorker';
 import { useAgent } from './useAtproto';
 import {useListFeedChunkLoader} from "@gridsky/core/runtime/composables/useListFeedChunkLoader";
 import {useListSelection} from "@gridsky/core/runtime/composables/useListSelection";
-import {ThreadModel} from "../models/ThreadModel";
+import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
 
 export function useListProfilePosts(uris: string[], feedGridKey: string) {
   const baseList = useListBase();
@@ -94,13 +94,13 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
     baseList.prepareToAppendItems()
 
     // convert each item in ThreadModel and populate list
-    const threadsInstanced: ThreadModel[] = []
+    const threadsInstanced = []
 
     let index = baseList.list.value.length
 
     data.items.forEach((thread: any) => {
       threadsInstanced.push(
-        new ThreadModel(thread, index)
+        useThreadModel(thread, index)
       )
       index++
     })

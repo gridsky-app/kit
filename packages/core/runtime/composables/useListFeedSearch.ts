@@ -6,6 +6,7 @@ import { useListFeedWorker } from './useListFeedWorker';
 import { useListFeedChunkLoader } from './useListFeedChunkLoader';
 import { useAgent } from './useAtproto';
 import {ThreadModel} from "@gridsky/core/runtime/models/ThreadModel";
+import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
 
 export function useListFeedSearch() {
   const workerConfig = {
@@ -86,7 +87,7 @@ export function useListFeedSearch() {
     let index = baseList.list.value.length
 
     data.items.forEach((thread: any) => {
-      const threadInstance = new ThreadModel(thread, index)
+      const threadInstance = useThreadModel(thread, index)
 
       threadsInstanced.push(threadInstance)
 

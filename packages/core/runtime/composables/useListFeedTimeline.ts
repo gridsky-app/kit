@@ -5,6 +5,7 @@ import { useListFeedWorker } from '@gridsky/core/runtime/composables/useListFeed
 import { useAgent } from '@gridsky/core/runtime/composables/useAtproto';
 import { ThreadModel } from '@gridsky/core/runtime/models/ThreadModel';
 import {useListFeedChunkLoader} from "@gridsky/core/runtime/composables/useListFeedChunkLoader";
+import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
 
 export function useListFeedTimeline(source: { feed: string }) {
     const workerConfig = {
@@ -77,7 +78,7 @@ export function useListFeedTimeline(source: { feed: string }) {
 
         data.items.forEach((thread: any) => {
           threadsInstanced.push(
-            new ThreadModel(thread, index)
+            useThreadModel(thread, index)
           )
           index++
         })

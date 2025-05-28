@@ -3,8 +3,8 @@ import { useListCursor } from './useListCursor';
 import { useListNavigation } from './useListNavigation';
 import { useListFeedWorker } from './useListFeedWorker';
 import { useListFeedChunkLoader } from './useListFeedChunkLoader';
+import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
 import { useAgent } from './useAtproto';
-import {ThreadModel} from "@gridsky/core/runtime/models/ThreadModel";
 
 export function useListFeed(source: any) {
   const workerConfig = {
@@ -76,9 +76,8 @@ export function useListFeed(source: any) {
     let index = baseList.list.value.length
 
     data.items.forEach((thread: any) => {
-      threadsInstanced.push(
-        new ThreadModel(thread, index)
-      )
+      const threadInstance = useThreadModel(thread, index);
+      threadsInstanced.push(threadInstance);
       index++
     })
 

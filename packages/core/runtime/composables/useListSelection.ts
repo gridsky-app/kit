@@ -12,13 +12,13 @@ export function useListSelection(listContext: any) {
     listContext._list.value.forEach((thread: ThreadModel) => {
       thread.selection.set(
         selectedPostUrisToMarkAsSelected.value.includes(thread.post.uri)
-      );
-    });
+      )
+    })
   }
 
   function applyFilterLogicByNotSelected() {
     listContext.setFilterLogic((thread: ThreadModel) => {
-      return !thread.selection.selected;
+      return !thread.selection.state.selected;
     })
   }
 
