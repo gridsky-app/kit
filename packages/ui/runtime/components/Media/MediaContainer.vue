@@ -34,6 +34,7 @@ withDefaults(defineProps<{
 .gsky-media {
   position: relative;
   width: 100%;
+  height: 100%;
 
   &--format-reel {
     aspect-ratio: 9 / 16;

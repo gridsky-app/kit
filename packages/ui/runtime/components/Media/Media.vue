@@ -64,6 +64,12 @@ const mediaStyles = computed(() => {
 })
 
 function onMediaReady() {
+  props.thread.ready = true
+
+  if (props.thread.chunk?.incrementChunkMediaLoaded) {
+    props.thread.chunk.incrementChunkMediaLoaded()
+  }
+
   emit('ready')
 }
 </script>
@@ -78,9 +84,13 @@ function onMediaReady() {
 
     <template v-if="thread.post.embed.type === 'image'">
       <MediaImage
-          :image="thread.post.embed.images[0]"
-          :aspect-ratio="aspectRatio"
-          @ready="onMediaReady"
+        v-if="thread.post.embed.images.length > 0"
+        :image="thread.post.embed.images[0]"
+        :aspect-ratio="aspectRatio"
+        @ready="onMediaReady"
+      />
+      <PostDummy
+        v-else
       />
     </template>
 
