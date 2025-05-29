@@ -74,4 +74,84 @@ export class ThreadEmbedModel {
                 return 'text'
         }
     }
+
+    public draftAdd(data) {
+      // only images are supported for now
+      this.$type = 'app.bsky.embed.images#view'
+
+      switch (this.$type) {
+        case 'app.bsky.embed.images#view': {
+          const image = new ThreadEmbedImageModel(data)
+          this.images.push(image)
+          break
+        }
+        case 'app.bsky.embed.video#view':
+
+          break
+      }
+    }
+
+  public draftEdit(id: number, patch: Partial<DraftMedia>) {
+    switch (this.$type) {
+      case 'app.bsky.embed.images#view': {
+        const media = this.images.find(media => media.id === id)
+        if (!media) return
+
+        if (patch.alt !== undefined) {
+          media.alt = patch.alt
+        }
+
+        if (patch.aspectRatio) {
+          media.aspectRatioRaw = patch.aspectRatio
+        }
+
+        if (patch.thumb) {
+          media.thumb = patch.thumb
+        }
+
+        if (patch.blob) {
+          media.blob = patch.blob
+        }
+
+        if (patch.upload) {
+          if (!media.upload.value) {
+            media.upload = ref({ isUploading: false, isUploaded: false, progress: 0 })
+          }
+
+          media.upload.value = {
+            ...media.upload.value,
+            ...patch.upload
+          }
+        }
+        break
+      }
+
+      case 'app.bsky.embed.video#view':
+
+        break
+    }
+  }
+
+  public draftRemove(id: number) {
+      switch (this.$type) {
+        case 'app.bsky.embed.images#view': {
+          const index = this.images.findIndex(image => image.id === id)
+
+          if (index !== -1) {
+            const image = this.images[index]
+
+            if (image.thumb?.startsWith('blob:')) {
+              URL.revokeObjectURL(image.thumb)
+            }
+
+            this.images.splice(index, 1)
+          }
+          break
+        }
+
+        case 'app.bsky.embed.video#view':
+          this.video = null
+          break
+      }
+    }
 }

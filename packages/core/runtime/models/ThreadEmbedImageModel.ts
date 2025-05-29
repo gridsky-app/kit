@@ -1,12 +1,25 @@
 export class ThreadEmbedImageModel {
+    public id: string
     public alt: string
     public thumb: string
     public aspectRatioRaw: undefined | {width: number, height: number}
 
-    constructor(image) {
-        this.alt = image.alt
-        this.thumb = image.thumb
-        this.aspectRatioRaw = image.aspectRatio
+    public blob: Blob
+    public upload = ref<undefined | { isUploading: false, isUploaded: false, progress: 0 }>(undefined)
+
+    constructor(media) {
+        this.id = media.id
+        this.alt = media.alt
+        this.thumb = media.thumb
+        this.aspectRatioRaw = media.aspectRatio
+
+        if (media.blob) {
+            this.blob = media.blob
+        }
+
+        if (media.upload) {
+            this.upload = media.upload
+        }
     }
 
     get aspectRatio() {

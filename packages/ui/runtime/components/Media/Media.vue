@@ -38,7 +38,7 @@ const aspectRatio = computed(() => {
 })
 
 const mediaClasses = computed(() => {
-  const classes = ['gsky-media']
+  const classes = []
 
   if (props.scrollable) {
     classes.push('overflow-y-auto scrollbar-invisible')
