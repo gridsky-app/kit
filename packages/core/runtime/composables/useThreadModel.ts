@@ -133,6 +133,62 @@ export function useThreadModel(initialData: any | string, index?: number) {
     })
   }
 
+  const layoutHorizontal = computed(() => {
+    let fillImage = false
+    let mediaColumnStyles = {}
+
+    const display = useDisplay()
+
+    if (post.embed && post.embed.aspectRatio) {
+      if (
+        (post.embed && post.embed.aspectRatio > 0.89 && post.embed.aspectRatio < 1.55)
+      ) {
+        fillImage = true
+      }
+
+      if (post.embed.aspectRatio >= 1) {
+
+        if (post.embed.aspectRatio === 1) {
+
+          if (display.width.value < 1400) {
+            mediaColumnStyles.width = '40vw'
+          } else {
+            mediaColumnStyles.width = '80vh'
+            /*
+            if (!props.isDialog) {
+              mediaColumnStyles.width = '40vh'
+            } else {
+              mediaColumnStyles.width = '80vh'
+            }
+             */
+          }
+        } else {
+          mediaColumnStyles.width = '50vw'
+        }
+
+        if (post.embed.aspectRatio > 1.3) {
+          mediaColumnStyles.maxWidth = '100vh'
+        } else {
+          mediaColumnStyles.maxWidth = '80vh'
+        }
+
+      } else {
+
+        if (post.embed.aspectRatio > 0.6) {
+          mediaColumnStyles.width = '60vh'
+        } else {
+          mediaColumnStyles.height = '90vh'
+        }
+
+      }
+    }
+
+    return {
+      mediaColumnStyles,
+      fillImage,
+    }
+  })
+
   return {
     post,
     feedContext,
@@ -157,5 +213,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     isLiked,
     setLike,
     toggleLike,
+    layoutHorizontal,
   }
 }
