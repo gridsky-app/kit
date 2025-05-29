@@ -9,7 +9,7 @@ export function useListSelection(listContext: any) {
   }
 
   function applyPreSelectionOnThreads() {
-    listContext._list.value.forEach((thread: ThreadModel) => {
+    listContext.list.value.forEach((thread: ThreadModel) => {
       thread.selection.set(
         selectedPostUrisToMarkAsSelected.value.includes(thread.post.uri)
       )
