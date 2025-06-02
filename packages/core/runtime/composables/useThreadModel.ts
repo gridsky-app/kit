@@ -31,7 +31,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     chunk.value = newChunk
   }
 
-  // helper: parse post object
   function parseThreadPost(p: any) {
     post.cid = p.cid
     post.uri = p.uri
@@ -55,7 +54,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     }
   }
 
-  // inizializzazione dati
   if (typeof initialData === 'string') {
     post.uri = initialData
   } else if (initialData?.post) {
@@ -68,6 +66,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
   async function getThread() {
     const response = await useAgent('auto').getPostThread({ uri: post.uri })
     const data = response.data
+
     if (data) {
       parseThreadPost(data.thread.post)
       updateThreadReplies(data.thread.replies)
@@ -110,7 +109,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
   async function deleteThreadReply(threadToDelete: ReturnType<typeof useThreadModel>) {
     replies.value = replies.value.filter(reply => reply.post.uri !== threadToDelete.post.uri)
     await useAgent('private').deletePost(threadToDelete.post.uri)
-    await getThreadReplies()
+    //await getThreadReplies()
   }
 
   function areLikesLoaded() {
@@ -135,9 +134,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
 
   const layoutHorizontal = computed(() => {
     let fillImage = false
-    let mediaColumnStyles = {}
-
-    const display = useDisplay()
+    let mediaColumnStyles: any = {}
 
     if (post.embed && post.embed.aspectRatio) {
       if (
@@ -150,7 +147,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
 
         if (post.embed.aspectRatio === 1) {
 
-          if (display.width.value < 1400) {
+          if (window.innerWidth < 1400) {
             mediaColumnStyles.width = '40vw'
           } else {
             mediaColumnStyles.width = '80vh'
