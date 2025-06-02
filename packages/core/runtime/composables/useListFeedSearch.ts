@@ -15,6 +15,7 @@ export function useListFeedSearch() {
       normalizeItems: {
         putInObjectProperty: 'post',
       },
+      actions: {}
     },
     storage: {
       context: 'gridsky:common',
@@ -48,11 +49,13 @@ export function useListFeedSearch() {
   const navigation = useListNavigation(_this)
   _this.navigation = navigation
 
-  async function requestItems(resetCursor?: boolean) {
-    if (resetCursor) {
+  async function requestItems(reset?: boolean) {
+    if (reset) {
       cursor.value = undefined;
       isNewSearch.value = true;
     }
+
+    workerConfig.parser.actions.resetCursor = !!reset
 
     const response = await useAgent('auto').app.bsky.feed.searchPosts({
       q: query.value,

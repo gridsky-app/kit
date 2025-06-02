@@ -16,6 +16,7 @@ export function useListProfileFeed(
   const workerConfig = {
     parser: {
       listKey: 'feed',
+      actions: {}
     },
     storage: {
       context: 'gridsky:common',
@@ -53,6 +54,8 @@ export function useListProfileFeed(
     if (reset) {
       resetCursor();
     }
+
+    workerConfig.parser.actions.resetCursor = !!reset
 
     const response = await useAgent('auto').app.bsky.feed.getAuthorFeed({
       actor,

@@ -10,6 +10,7 @@ export function useListFeed(source: any) {
   const workerConfig = {
     parser: {
       listKey: 'feed',
+      actions: {},
     },
     storage: {
       context: 'gridsky:common',
@@ -37,10 +38,12 @@ export function useListFeed(source: any) {
   const navigation = useListNavigation(_this)
   _this.navigation = navigation
 
-  async function requestItems(resetCursorFlag?: boolean) {
-    if (resetCursorFlag) {
+  async function requestItems(reset?: boolean) {
+    if (reset) {
       resetCursor();
     }
+
+    workerConfig.parser.actions.resetCursor = !!reset
 
     const response = await useAgent('auto').app.bsky.feed.getFeed({
       limit: 25,

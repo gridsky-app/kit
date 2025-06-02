@@ -20,7 +20,7 @@ export function useListSearchActor() {
 
         const response = await useAgent('auto').app.bsky.actor.searchActors({
             q: query,
-            limit: 10,
+            limit: 5,
             cursor: cursor.value,
         });
 
