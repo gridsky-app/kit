@@ -23,7 +23,9 @@ const props = withDefaults(defineProps<{
   album: {
     direction: 'horizontal'
   },
-  video: {},
+  video: {
+    showVolume: true,
+  },
   performance: {},
 })
 
