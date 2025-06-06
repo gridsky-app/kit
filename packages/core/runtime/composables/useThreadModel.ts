@@ -48,6 +48,11 @@ export function useThreadModel(initialData: any | string, index?: number) {
       post.embed = new ThreadEmbedModel(p.embed)
     }
 
+    post.likes = {
+      list: [],
+      avatars: []
+    }
+
     if (p.viewer) {
       post.viewer = p.viewer
       flags.hasLike = !!p.viewer.like
@@ -60,8 +65,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     parseThreadPost(initialData.post)
     feedContext.value = initialData.feedContext
   }
-
-  // public API methods
 
   async function getThread() {
     const response = await useAgent('auto').getPostThread({ uri: post.uri })
@@ -122,6 +125,34 @@ export function useThreadModel(initialData: any | string, index?: number) {
 
   function setLike(value: boolean) {
     flags.hasLike = value
+  }
+
+  async function getThreadLikes(prepopulatedLikes?: any[]) {
+    if (flags.likesLoaded) {
+      return true
+    }
+
+    const likes = await useAgent('auto')
+      .app.bsky.feed.getLikes({
+        uri: post.uri,
+        cid: post.cid
+      })
+      .then(result => {
+        return result.data.likes
+      })
+
+    const likesWithAvatarsToShow = likes
+      .filter(profile => !(isLogged() && !profile.actor.viewer?.following))
+      .map(profile => new AuthorModel(profile.actor))
+
+    flags.likesLoaded = true
+
+    post.likes = {
+      list: likes,
+      avatars: likesWithAvatarsToShow.slice(0, 5)
+    }
+
+    return true
   }
 
   async function toggleLike() {
@@ -210,6 +241,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
     isLiked,
     setLike,
     toggleLike,
+    getThreadLikes,
     layoutHorizontal,
   }
 }
