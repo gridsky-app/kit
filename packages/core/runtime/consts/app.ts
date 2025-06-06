@@ -17,7 +17,7 @@ export const defaultConfigProfileGridList: GridskyProfileRawGrid[] = [
         name: 'default',
         label: 'Posts',
         layout: '1-1',
-        list: []
+        posts: []
     }
 ]
 
