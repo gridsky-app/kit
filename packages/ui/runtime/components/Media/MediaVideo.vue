@@ -67,7 +67,7 @@ watch(() => mediaVolumeStore.muted, value => {
     <video
         ref="videoRef"
         :autoplay="autoplay" playsinline
-        :poster="thread.post.embed.video.thumb"
+        :poster="thread.post.embed?.video?.thumb"
         :muted="mediaVolumeStore.muted"
         :loop="isReel || loop || videoDuration <= 4"
         @click="onVideoClick"

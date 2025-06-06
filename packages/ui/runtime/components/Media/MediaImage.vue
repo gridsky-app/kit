@@ -22,7 +22,7 @@ defineEmits(['ready'])
 
 <style scoped lang="scss">
 .gsky-media__image {
-  min-height: 100%;
+  height: 100%;
 
   img {
     width: 100%;
