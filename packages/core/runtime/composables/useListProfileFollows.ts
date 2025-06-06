@@ -21,14 +21,14 @@ export function useListProfileFollows(actor: string) {
             cursor: cursor.value,
         });
 
-        if (response.cursor) {
-            updateCursor(response.cursor);
-        }
-
         await baseList.appendItems({
-          hasReachedEnd: !cursor.value,
+          hasReachedEnd: !response.data['cursor'],
           items: response.data['follows'],
         })
+
+        if (response.data['cursor']) {
+          updateCursor(response.data['cursor']);
+        }
     }
 
     async function fetchList(restart?: boolean) {
