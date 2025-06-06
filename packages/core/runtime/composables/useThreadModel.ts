@@ -13,6 +13,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
   const repliesLoaded = ref(false)
   const updatedAt = ref(Date.now())
   const flags = reactive({
+    mediaReady: false,
     hasLike: false,
     likesLoaded: false,
     commentsLoaded: false,
@@ -217,6 +218,10 @@ export function useThreadModel(initialData: any | string, index?: number) {
     }
   })
 
+  function setMediaReady() {
+    flags.mediaReady = true
+  }
+
   return {
     post,
     feedContext,
@@ -243,5 +248,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     toggleLike,
     getThreadLikes,
     layoutHorizontal,
+    setMediaReady,
   }
 }
