@@ -1,4 +1,7 @@
+import { useAccountStore } from "@gridsky/core/runtime/stores/storeAccount"
+import {useAgent} from "@gridsky/core/runtime/composables/useAtproto";
 import {RichText} from "@atproto/api"
+import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
 
 export class ThreadReplyHandler {
     private text: string = ''
@@ -18,13 +21,24 @@ export class ThreadReplyHandler {
         const rt = new RichText({text: this.text})
         await rt.detectFacets(atprotoAgent)
 
+        const createdThreadReply = await atprotoAgent
+          .post({
+            text: rt.text,
+            facets: rt.facets,
+            reply: {
+              parent: data.parent,
+              root: data.root,
+            },
+            createdAt: new Date().toISOString(),
+          })
+
         const createdAt = new Date().toISOString()
 
-        const virtualThreadReply = {
+        const virtualThreadReply = useThreadModel({
             $type: "app.bsky.feed.defs#threadViewPost",
             post: {
-                uri: undefined,
-                cid: undefined,
+                uri: createdThreadReply.uri,
+                cid: createdThreadReply.cid,
                 author: {
                     did: accountStore.account.did,
                     handle: accountStore.account.handle,
@@ -56,12 +70,12 @@ export class ThreadReplyHandler {
             },
             replies: [],
             threadContext: {},
-        }
+        })
 
         if (data.root.uri === data.parent.uri) {
-            this.thread.replies.value.unshift(virtualThreadReply)
+            this.thread.replies.unshift(virtualThreadReply)
         } else {
-            const reply = this.thread.replies.value.find(thread => thread.post.uri === data.parent.uri)
+            const reply = this.thread.replies.find(thread => thread.post.uri === data.parent.uri)
 
             reply.post.replyCount++
             reply.replies.unshift(virtualThreadReply)
@@ -70,17 +84,6 @@ export class ThreadReplyHandler {
         this.clear()
 
         useState(STATE_THREAD_REPLY_PARENT).value = undefined
-
-        await atprotoAgent
-            .post({
-                text: rt.text,
-                facets: rt.facets,
-                reply: {
-                    parent: data.parent,
-                    root: data.root,
-                },
-                createdAt: new Date().toISOString(),
-            })
     }
 
     clear() {
