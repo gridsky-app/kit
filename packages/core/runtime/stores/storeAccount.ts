@@ -1,5 +1,6 @@
 import {AppBskyActorDefs} from "@atproto/api";
 import { useAccountSessionStore } from "@gridsky/core/runtime/stores/storeAccountSession"
+import { useProfileGridStore } from "@gridsky/core/runtime/stores/storeProfileGrid"
 
 export const useAccountStore = defineStore("account", () => {
     const appThemeStore = useAppThemeStore()

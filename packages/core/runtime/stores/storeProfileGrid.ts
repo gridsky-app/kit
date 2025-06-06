@@ -1,78 +1,106 @@
 import {makeHandleLonger} from "@gridsky/core/runtime/utils/utilProfile"
+import {useAccountStore} from '@gridsky/core/runtime/stores/storeAccount'
+
+// todo migrate to profileDid or just pass the profile
+import {workerSlugify} from "@gridsky/core/runtime/workers/utils/utilWorkerString";
 
 export function useProfileGridStore(profileHandle: string) {
-    return defineStore(`profile/grid/${makeHandleLonger(profileHandle)}`, () => {
+  return defineStore(`profile/grid/${makeHandleLonger(profileHandle)}`, () => {
+    const accountStore = useAccountStore()
 
-        const gridList = ref<GridskyProfileRawGrid[]>([])
-        const gridActiveKey = ref<string>('')
+    const gridList = ref<GridskyProfileRawGrid[]>([])
+    const gridActiveKey = ref<string>('')
 
-        const gridActive = computed(() => {
-            // fetch current raw grid
-            const rawGrid = (
+    const gridListWithExtraItems = computed(() => {
+      const threadDraftListStore = useThreadDraftListStore()
 
-                // determine active raw grid
-                gridList.value.find(grid => {
-                    return grid.name === gridActiveKey.value
-                }) || {
-                    name: gridActiveKey.value,
-                    posts: [],
-                }
+      let gridListSpecialPrepend = []
 
-            ) as GridskyProfileRawGrid
-
-            return {
-                ...rawGrid,
-
-                // posts will be just posts
-                // and should be fetched with getPosts
-                postsToFetch: rawGrid.posts
-                    ? rawGrid.posts?.filter((postUri: string) => postUri.startsWith('at://'))
-                    : [],
-
-                // drafts are gridsky drafts
-                // and should be fetched using a custom call
-                draftsToFetch: rawGrid.posts
-                    ? rawGrid.posts?.filter((postUri: string) => postUri.startsWith('draft://'))
-                    : []
-            }
+      if (isLogged() && accountStore.account.handle === makeHandleLonger(profileHandle) && threadDraftListStore.threadDraftList.length > 0) {
+        gridListSpecialPrepend.push({
+          label: 'Drafts',
+          name: 'drafts',
+          layout: '1-1',
+          posts: []
         })
+      }
 
-        const gridActiveIndex: ComputedRef<number> = computed(() => {
-            return gridList.value.findIndex(grid => {
-                return grid.name === gridActiveKey.value
-            }) || 0
+      return [
+        ...gridListSpecialPrepend,
+        ...gridList.value.map(rawGrid => {
+          return {
+            ...rawGrid,
+
+            // posts will be just posts
+            // and should be fetched with getPosts
+            postsToFetch: rawGrid.posts
+              ? rawGrid.posts?.filter((postUri: string) => postUri.startsWith('at://'))
+              : [],
+
+            // drafts are gridsky drafts
+            // and should be fetched using a custom call
+            draftsToFetch: rawGrid.posts
+              ? rawGrid.posts?.filter((postUri: string) => postUri.startsWith('draft://'))
+              : []
+          }
         })
+      ]
+    })
 
-        const activeGridHasCustomPosts = computed(() => {
-            if (!gridActive.value) {
-                return false
-            }
+    const gridActive = computed(() => {
+      return (
 
-            return gridActive.value.posts && (Array.isArray(gridActive.value.posts) && gridActive.value.posts.length > 0)
-        })
-
-        function setProfileGridList(grids: any) {
-            gridList.value = grids
-
-            setProfileActiveGrid(grids[0].name)
+        // determine active raw grid
+        gridListWithExtraItems.value.find(grid => {
+          return grid.name === gridActiveKey.value
+        }) || {
+          name: gridActiveKey.value,
+          posts: [],
         }
 
-        function setProfileActiveGrid(name: string | undefined) {
-            if (!name) {
-                return
-            }
+      ) as GridskyProfileRawGrid
+    })
 
-            gridActiveKey.value = name
-        }
+    const gridActiveIndex: ComputedRef<number> = computed(() => {
+      return gridListWithExtraItems.value.findIndex(grid => {
+        return grid.name === gridActiveKey.value
+      }) || 0
+    })
 
-        return {
-            gridList,
-            gridActiveKey,
-            gridActiveIndex,
-            gridActive,
-            activeGridHasCustomPosts,
-            setProfileGridList,
-            setProfileActiveGrid,
-        }
-    })()
+    const activeGridHasCustomPosts = computed(() => {
+      if (!gridActive.value) {
+        return false
+      }
+
+      return gridActive.value.posts && (Array.isArray(gridActive.value.posts) && gridActive.value.posts.length > 0)
+    })
+
+    function setProfileGridList(grids: any) {
+      gridList.value = grids
+    }
+
+    function setFirstAvailableProfileGridAsProfileActiveGrid() {
+      setProfileActiveGrid(gridList.value[0].name)
+    }
+
+    function setProfileActiveGrid(name: string | undefined) {
+      if (!name) {
+        return
+      }
+
+      gridActiveKey.value = name
+    }
+
+    return {
+      gridList,
+      gridListWithExtraItems,
+      gridActiveKey,
+      gridActiveIndex,
+      gridActive,
+      activeGridHasCustomPosts,
+      setProfileGridList,
+      setProfileActiveGrid,
+      setFirstAvailableProfileGridAsProfileActiveGrid,
+    }
+  })()
 }
