@@ -110,6 +110,11 @@ export function useThreadModel(initialData: any | string, index?: number) {
     replies.value = []
   }
 
+  async function deleteThread(threadToDelete: ReturnType<typeof useThreadModel>) {
+    // replies.value = replies.value.filter(reply => reply.post.uri !== threadToDelete.post.uri)
+    await useAgent('private').deletePost(post.uri)
+  }
+
   async function deleteThreadReply(threadToDelete: ReturnType<typeof useThreadModel>) {
     replies.value = replies.value.filter(reply => reply.post.uri !== threadToDelete.post.uri)
     await useAgent('private').deletePost(threadToDelete.post.uri)
@@ -241,6 +246,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
     areThreadRepliesLoaded,
     getThreadReplies,
     resetThreadReplies,
+    deleteThread,
     deleteThreadReply,
     areLikesLoaded,
     isLiked,

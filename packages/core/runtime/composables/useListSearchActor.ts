@@ -41,9 +41,7 @@ export function useListSearchActor() {
     }
 
     async function runSearch() {
-        baseList.clearList()
         setQuery(query)
-
         await requestItems()
     }
 

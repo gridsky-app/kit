@@ -36,14 +36,14 @@ export function useListNotification() {
 
   async function fetchList(restart?: boolean) {
     baseList.isLoading.value = true;
-
     await requestItems();
-
     baseList.isLoading.value = false;
   }
 
   async function refetchList() {
     baseList.isRefreshing.value = true
+    baseList.clearList()
+
     await fetchList(true)
   }
 

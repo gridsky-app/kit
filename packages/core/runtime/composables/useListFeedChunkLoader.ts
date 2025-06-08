@@ -152,10 +152,12 @@ export function useListFeedChunkLoader(baseList: any) {
 
     const infiniteLoader = computed(() => {
         return {
-            options: {
+          /*
+           options: {
                 root: getMainElement(),
                 rootMargin: `${window.innerHeight * 3}px`
             }
+           */
         }
     })
 

@@ -1,8 +1,6 @@
-import { ref, onUnmounted } from 'vue';
+const worker = new Worker(new URL('../workers/workerFeed.ts', import.meta.url), { type: 'module' });
 
 export function useListFeedWorker(workerConfig: object) {
-  const worker = new Worker(new URL('../workers/workerFeed.ts', import.meta.url), { type: 'module' });
-
   function postMessage(message: { type: string, config: any, response: any }) {
     worker.postMessage(message);
   }
@@ -12,10 +10,6 @@ export function useListFeedWorker(workerConfig: object) {
   }
 
   setWorkerConfig(workerConfig);
-
-  onUnmounted(() => {
-    worker.terminate();
-  });
 
   function listenOnce(eventType: string, callback: (e: MessageEvent) => void) {
     const handler = (e: MessageEvent) => {

@@ -68,17 +68,18 @@ export function useListProfileFeed(
       updateCursor(response.data.cursor);
     }
 
-    postMessage({
-      type: 'process',
-      config: workerConfig,
-      response,
-    });
-
     return new Promise((resolve) => {
       listenOnce('processed', async (e) => {
+
         await appendItems(e.data.result);
         chunkLoader.preloadNextChunk('FeedModel');
         resolve(true);
+      });
+
+      postMessage({
+        type: 'process',
+        config: workerConfig,
+        response,
       });
     });
   }
