@@ -1,5 +1,6 @@
 import {AppBskyActorDefs} from "@atproto/api";
 import { useAccountSessionStore } from "@gridsky/core/runtime/stores/storeAccountSession"
+import { useProfileStore } from "@gridsky/core/runtime/stores/storeProfile"
 import { useProfileGridStore } from "@gridsky/core/runtime/stores/storeProfileGrid"
 
 export const useAccountStore = defineStore("account", () => {
@@ -34,7 +35,7 @@ export const useAccountStore = defineStore("account", () => {
 
         if (completeFetch) {
             await Promise.allSettled([
-                profileStore.loadProfile(accountSessionStore.activeDid, restoreAccountCallback),
+                profileStore.loadProfile(restoreAccountCallback),
                 accountPreferencesStore.fetchAccountPreferences(),
                 suggestionProfilesStore.fetchSuggestionProfilesLogged(),
                 accountBookmarkStore.getBookmarksBatch(),

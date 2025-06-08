@@ -18,7 +18,7 @@ interface PendingProfileRequest {
 const pendingProfileRequests = new Map<string, PendingProfileRequest>()
 
 const worker = new Worker(
-  new URL('../workers/workerProfile.ts', import.meta.url),
+  new URL('@gridsky/core/runtime/workers/workerProfile.ts', import.meta.url),
   {type: 'module'}
 )
 
@@ -100,6 +100,7 @@ export const useProfileStore = function (profileHandle: string) {
         // each request will be resolved when the web worker returns the data we asked
         // like the full profile (it first returns it from the cache, then from remote)
         new Promise((resolve) => {
+
           pendingProfileRequests.set(requestId, {
             onCache: (cacheData) => {
               handleWorkerProfileResponse(cacheData)
