@@ -4,7 +4,7 @@
 
 <style scoped lang="scss">
 span {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 600;
 }
 </style>

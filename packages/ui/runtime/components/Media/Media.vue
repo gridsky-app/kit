@@ -23,9 +23,7 @@ const props = withDefaults(defineProps<{
   album: {
     direction: 'horizontal'
   },
-  video: {
-    showVolume: true,
-  },
+  video: {},
   performance: {},
 })
 
@@ -66,6 +64,13 @@ const mediaStyles = computed(() => {
 })
 
 function onMediaReady() {
+  if (props.thread.ready) {
+    // already loaded
+    // todo if you remove this you'll face a reactivity error
+    // and incrementChunkMediaLoaded will start from 15 or more
+    return
+  }
+
   props.thread.ready = true
 
   if (props.thread.chunk?.incrementChunkMediaLoaded) {

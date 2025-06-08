@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-2 pr-0">
+  <div class="px-2 pr-0">
     <Icon name="lucide:grip-vertical" :size="16"/>
   </div>
 </template>
