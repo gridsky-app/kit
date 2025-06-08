@@ -79,6 +79,10 @@ export function useProfileGridStore(profileHandle: string) {
       gridList.value = grids
     }
 
+    function doesProfileGridExist(gridName: string) {
+      return gridList.value.find(g => g.name === gridName)
+    }
+
     function setFirstAvailableProfileGridAsProfileActiveGrid() {
       setProfileActiveGrid(gridList.value[0].name)
     }
@@ -100,6 +104,7 @@ export function useProfileGridStore(profileHandle: string) {
       activeGridHasCustomPosts,
       setProfileGridList,
       setProfileActiveGrid,
+      doesProfileGridExist,
       setFirstAvailableProfileGridAsProfileActiveGrid,
     }
   })()
