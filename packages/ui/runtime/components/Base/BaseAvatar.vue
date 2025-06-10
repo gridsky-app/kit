@@ -15,6 +15,7 @@ const props = defineProps<{
   }
   size?: number;
   link?: string;
+  loading?: boolean
 }>();
 
 const displayLetter = computed(() => {
@@ -38,9 +39,18 @@ const displayLetter = computed(() => {
     border
   >
 
-    <Icon v-if="avatar?.icon?.name" v-bind="avatar?.icon"/>
-    <img v-else-if="avatar?.image" :src="avatar?.image" :alt="title" loading="lazy"/>
+    <img v-if="avatar?.image" :src="avatar?.image" :alt="title" loading="lazy"/>
+    <Icon v-else-if="avatar?.icon?.name" v-bind="avatar?.icon"/>
     <span v-else v-text="displayLetter"/>
+
+    <v-progress-circular
+      v-if="loading"
+      indeterminate
+      :size="size - 2"
+      :width="2"
+    />
+
+    <slot/>
 
     <nuxt-link
       v-if="link" :to="link"
@@ -63,6 +73,13 @@ const displayLetter = computed(() => {
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  .v-progress-circular {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
   }
 }
 </style>

@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import {computed} from "vue"
+
 const props = withDefaults(
   defineProps<{
     profile?: any
     size?: number
-    iconSize?: number
+    icon?: {
+      name?: string;
+      size?: number;
+      class?: string;
+    }
     border?: boolean
     editable?: boolean
+    loading?: boolean
     link?: boolean
   }>(),
   {
@@ -13,10 +20,13 @@ const props = withDefaults(
   },
 )
 
-const avatar = {
-  image: props.profile.avatar,
-  letter: props.profile.handle,
-}
+const avatar = computed(() => {
+  return {
+    image: props.profile.avatar,
+    letter: props.profile.handle,
+    icon: props.icon,
+  }
+})
 </script>
 
 <template>
@@ -24,7 +34,10 @@ const avatar = {
     class="gsky-profile-avatar"
     :avatar="avatar"
     :size="size"
-  />
+    :loading="loading"
+  >
+    <slot/>
+  </BaseAvatar>
 </template>
 
 <style scoped lang="scss">
