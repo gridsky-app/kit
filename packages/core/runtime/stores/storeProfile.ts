@@ -51,7 +51,6 @@ export const useProfileStore = function (profileHandle: string) {
     const handle = ref<string>(handleFull)
 
     const profile = ref<BskyProfile>(undefined as BskyProfile)
-    const viewer = ref({})
 
     const appearance = ref({
       theme: {
@@ -60,13 +59,16 @@ export const useProfileStore = function (profileHandle: string) {
         colorPrimary: '',
         backgroundTone: '',
       },
-      animation: {
+      banner: {
         enabled: true,
-        colors: []
+        gridskyColors: []
       }
     })
 
     const premium = ref<GskyProfilePremium | null>(null)
+
+    const isLoading = ref(false)
+    const isReady = ref(false)
 
     /**
      * Load the profile using the web worker.
@@ -77,9 +79,16 @@ export const useProfileStore = function (profileHandle: string) {
      * @param callback
      */
     async function loadProfile(callback?: any): Promise<void> {
+      if (isReady.value) {
+        return
+      }
+
       const requestId = generateId(8)
 
       function handleWorkerProfileResponse(data) {
+        isLoading.value = false
+        isReady.value = true
+
         setData(data)
 
         // pass fetched profile data to an additional callback
@@ -96,11 +105,12 @@ export const useProfileStore = function (profileHandle: string) {
         requestId,
       })
 
+      isLoading.value = true
+
       const loadProfilePromises: Promise<any>[] = [
         // each request will be resolved when the web worker returns the data we asked
         // like the full profile (it first returns it from the cache, then from remote)
         new Promise((resolve) => {
-
           pendingProfileRequests.set(requestId, {
             onCache: (cacheData) => {
               handleWorkerProfileResponse(cacheData)
@@ -130,7 +140,7 @@ export const useProfileStore = function (profileHandle: string) {
       )
 
       if (profileResult && profileResult.status === 'fulfilled') {
-        viewer.value = profileResult.value.viewer
+        profile.value.viewer = profileResult.value.viewer
       }
     }
 
@@ -163,11 +173,11 @@ export const useProfileStore = function (profileHandle: string) {
      * Known followers of the profile to be used in the avatar stack
      */
     const knownFollowers = computed(() => {
-      if (!viewer.value) {
+      if (!profile.value.viewer) {
         return []
       }
 
-      return viewer.value.knownFollowers.followers.slice(0, 3)
+      return profile.value.viewer.knownFollowers.followers.slice(0, 3)
     })
 
     /**
@@ -246,14 +256,22 @@ export const useProfileStore = function (profileHandle: string) {
       appearance.value = data
     }
 
+    const pageController = ref()
+
+    function setPageController(controller) {
+      pageController.value = controller
+    }
+
     return {
       did,
       serviceEndpoint,
       profile,
       appearance,
       knownFollowers,
-      viewer,
+      premium,
       isPremium,
+      isLoading,
+      isReady,
 
       loadProfile,
       resolveDid,
@@ -262,6 +280,9 @@ export const useProfileStore = function (profileHandle: string) {
       setProfilePremium,
       setProfileAppearance,
       setData,
+
+      pageController,
+      setPageController,
     }
   })()
 }
