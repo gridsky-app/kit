@@ -1,12 +1,14 @@
 <script setup lang="ts">
-defineProps<{
+withDefaults(defineProps<{
   thread: any
   aspectRatio?: number
   cover?: boolean
   navigation?: boolean
   direction: 'horizontal' | 'vertical'
   mousewheel?: boolean
-}>()
+}>(), {
+  direction: 'horizontal'
+})
 
 const emit = defineEmits(['ready', 'albumSwiperReady'])
 const swiper = useTemplateRef('swiper')
