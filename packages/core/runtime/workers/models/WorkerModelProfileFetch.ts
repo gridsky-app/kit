@@ -36,25 +36,25 @@ export class WorkerModelProfileFetch {
     const promises = []
 
     if (!knownData.profile) {
-      promises.push(this.getProfile())
+      promises.push(this.getProfileX())
     } else {
       this.profile = knownData.profile
     }
 
     if (!knownData.appearance) {
-      promises.push(this.getGridskyProfileAppearance())
+      promises.push(this.getGridskyProfileAppearanceX())
     } else {
       this.appearance = knownData.appearance
     }
 
     if (!knownData.gridList) {
-      promises.push(this.getGridskyProfileGrids())
+      promises.push(this.getGridskyProfileGridsX())
     } else {
       this.gridList = knownData.gridList
     }
 
     if (!knownData.premium) {
-      promises.push(this.getGridskyPremium())
+      promises.push(this.getGridskyPremiumX())
     } else {
       this.premium = knownData.premium
     }
@@ -93,7 +93,7 @@ export class WorkerModelProfileFetch {
     this.serviceEndpoint = data.service[0].serviceEndpoint
   }
 
-  private async getProfile() {
+  private async getProfileX() {
     this.profile = (
       await useWorkerAgentWithService().getProfile({
         actor: this.did,
@@ -101,7 +101,7 @@ export class WorkerModelProfileFetch {
     ).data
   }
 
-  private async getGridskyProfileGrids() {
+  private async getGridskyProfileGridsX() {
     function isValidGridData(data: any): boolean {
       return (
         data &&
@@ -120,7 +120,7 @@ export class WorkerModelProfileFetch {
       }))
     }
 
-    const response: any = await this.getGridskyRecord('app.gridsky.grid', 'list')
+    const response: any = await this.getGridskyRecordX('app.gridsky.grid', 'list')
     const data = response.data
 
     if (!isValidGridData(data)) {
@@ -131,17 +131,17 @@ export class WorkerModelProfileFetch {
     this.gridList = normalizeGridList(data.value.list)
   }
 
-  private async getGridskyProfileAppearance() {
+  private async getGridskyProfileAppearanceX() {
     function isValidAppearanceData(data: any): boolean {
       return (
         data &&
         data.value &&
         data.value.theme &&
-        data.value.animation
+        data.value.banner
       )
     }
 
-    function normalizeAppearanceConfig(data: any, config: any): any {
+    function normalizeAppearanceConfigX(data: any, config: any): any {
       if (data.value.theme) {
         if (typeof data.value.theme.dark !== 'undefined') {
           config.theme.dark = data.value.theme.dark
@@ -152,7 +152,7 @@ export class WorkerModelProfileFetch {
         if (data.value.theme.variant) {
           config.theme.variant = data.value.theme.variant
         }
-        if (dapromisesta.value.theme.colorPrimary) {
+        if (data.value.theme.colorPrimary) {
           config.theme.colorPrimary = data.value.theme.colorPrimary
         }
         if (data.value.theme.backgroundTone) {
@@ -161,12 +161,24 @@ export class WorkerModelProfileFetch {
         config.theme.sidebarCustomBlocks = !!data.value.theme.sidebarCustomBlocks
       }
 
-      if (data.value.animation) {
-        if (typeof data.value.animation.enabled !== 'undefined') {
-          config.animation.enabled = data.value.animation.enabled
+      if (data.value.banner) {
+        if (typeof data.value.banner.enabled !== 'undefined') {
+          config.banner.enabled = data.value.banner.enabled
         }
-        if (data.value.animation.colors) {
-          config.animation.colors = data.value.animation.colors
+        if (data.value.banner.gridskyColors && Array.isArray(data.value.banner.gridskyColors)) {
+          config.banner.gridskyColors = data.value.banner.gridskyColors
+        }
+        if (typeof data.value.banner.gridskyEnabled !== 'undefined') {
+          config.banner.gridskyEnabled = Boolean(data.value.banner.gridskyEnabled)
+        }
+        if (typeof data.value.banner.blueskyEnabled !== 'undefined') {
+          config.banner.blueskyEnabled = Boolean(data.value.banner.blueskyEnabled)
+        }
+        if (typeof data.value.banner.shadertoyEnabled !== 'undefined') {
+          config.banner.shadertoyEnabled = Boolean(data.value.banner.shadertoyEnabled)
+        }
+        if (data.value.banner.shadertoyId) {
+          config.banner.shadertoyId = String(data.value.banner.shadertoyId)
         }
       }
 
@@ -201,16 +213,17 @@ export class WorkerModelProfileFetch {
       return config
     }
 
-    const response: any = await this.getGridskyRecord('app.gridsky.preferences', 'config')
+    const response: any = await this.getGridskyRecordX('app.gridsky.preferences', 'config')
 
     if (!isValidAppearanceData(response.data)) {
       this.appearance = defaultConfigProfileAppearance
     }
 
-    this.appearance = normalizeAppearanceConfig(response.data, defaultConfigProfileAppearance)
+    this.appearance = normalizeAppearanceConfigX(response.data, defaultConfigProfileAppearance)
   }
 
-  private async getGridskyRecord(collection: string, key: string) {
+
+  private async getGridskyRecordX(collection: string, key: string) {
     return this.agent
       .com.atproto.repo.getRecord({
         repo: this.did,
@@ -219,7 +232,7 @@ export class WorkerModelProfileFetch {
       }).catch(() => ({data: null}))
   }
 
-  private async getGridskyPremium() {
+  private async getGridskyPremiumX() {
     this.premium = await fetch(`https://ae.gridsky.app/status?did=${this.did}`, {mode: "cors"})
       .then(async response => {
         if (!response.ok) {
