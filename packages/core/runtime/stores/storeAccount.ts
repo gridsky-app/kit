@@ -59,7 +59,7 @@ export const useAccountStore = defineStore("account", () => {
         accountSessionStore.setSessionAccount(account.value)
 
         // set app-theme account banner
-        appThemeStore.setBanner(account.value.banner)
+        appThemeStore.setBannerImage(account.value.banner)
     }
 
     function resetAccount() {

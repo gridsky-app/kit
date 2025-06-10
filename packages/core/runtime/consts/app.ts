@@ -29,12 +29,15 @@ export const defaultConfigProfileAppearance = {
         colorPrimary: '#0095f6',
         backgroundTone: ''
     },
-    animation: {
+    banner: {
         enabled: true,
-        showBannerInstead: false,
-        colors: [
-            '#0069ff',
-            '#333333'
-        ]
+        gridskyEnabled: true,
+        gridskyColors: [
+          '#0069ff',
+          '#333333'
+        ],
+        blueskyEnabled: false,
+        shadertoyEnabled: false,
+        shadertoyId: '',
     }
 }
