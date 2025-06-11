@@ -228,23 +228,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     flags.mediaReady = true
   }
 
-  const _height = ref(undefined)
-  const height = computed(() => {
-    if (!_height.value) {
-      return undefined
-    }
-
-    return `${_height.value}px`
-  })
-
-  function setHeight(value: number) {
-    if (_height.value) {
-      return
-    }
-
-    _height.value = value
-  }
-
   return {
     post,
     feedContext,
@@ -273,7 +256,5 @@ export function useThreadModel(initialData: any | string, index?: number) {
     getThreadLikes,
     layoutHorizontal,
     setMediaReady,
-    height,
-    setHeight,
   }
 }
