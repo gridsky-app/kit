@@ -51,7 +51,7 @@ export async function customFetch(input: RequestInfo | URL, fetchConfig?: Reques
             }
 
             // todo to improve this, remove ExpiredToken and wait
-            if (['ExpiredToken', 'RecordNotFound', 'InvalidRequest', 'InternalServerError'].includes(data.error)) {
+            if (['ExpiredToken', 'BlockedActor', 'RecordNotFound', 'InvalidRequest', 'InternalServerError'].includes(data.error)) {
                 return false
             } else {
                 noticeStore.setNotice(data)

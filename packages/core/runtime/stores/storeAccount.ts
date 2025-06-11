@@ -36,11 +36,10 @@ export const useAccountStore = defineStore("account", () => {
         if (completeFetch) {
             await Promise.allSettled([
                 profileStore.loadProfile(restoreAccountCallback),
-                accountPreferencesStore.fetchAccountPreferences(),
                 suggestionProfilesStore.fetchSuggestionProfilesLogged(),
-                accountBookmarkStore.getBookmarksBatch(),
             ])
 
+            await accountPreferencesStore.fetchAccountPreferences()
             threadDraftListStore.fetchDraftList()
         }
 

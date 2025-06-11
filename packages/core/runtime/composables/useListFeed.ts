@@ -10,7 +10,9 @@ export function useListFeed(source: any) {
   const workerConfig = {
     parser: {
       listKey: 'feed',
-      actions: {},
+      actions: {
+        resetCursor: false
+      },
     },
     storage: {
       context: 'gridsky:common',

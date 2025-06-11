@@ -11,6 +11,9 @@ export const useAccountAuthLoginStore = defineStore('account/auth/login', () => 
     const accountSessionStore = useAccountSessionStore()
     const accountAgentStore = useAccountAgentStore()
 
+    const resolvedHandle = ref(null)
+    const resolvedProfile = ref(null)
+
     const fieldIdentifier = ref('')
     const fieldPassword = ref('')
     const fieldAuthFactorToken = ref('')
@@ -95,6 +98,8 @@ export const useAccountAuthLoginStore = defineStore('account/auth/login', () => 
         login,
         loginOAuth,
         reset,
+        resolvedHandle,
+        resolvedProfile,
     }
 })
 
