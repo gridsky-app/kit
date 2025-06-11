@@ -1,3 +1,5 @@
+import {useThreadChunk} from './useThreadChunk'
+
 export function useListFeedChunkLoader(baseList: any) {
     const CHUNK_SIZE = 15
 
@@ -35,32 +37,13 @@ export function useListFeedChunkLoader(baseList: any) {
     })
 
     async function preloadNextChunk(origin?: string, setChunkAsAlreadyRendered = false): Promise<boolean> {
-        if (baseList.list.value.length < listChunkEnd.value && !baseList.cantLoadMoreItems.value) {
+      if (baseList.list.value.length < listChunkEnd.value && !baseList.cantLoadMoreItems.value) {
           return baseList.fetchList()
         }
 
         const chunkThreads = baseList.list.value.slice(listChunkStart.value, listChunkEnd.value)
 
-        function createChunkObject(chunkIndex, chunkThreads) {
-            const renderedThreads = ref(0)
-            const rendered = ref(false)
-
-            return {
-                id: chunkIndex,
-                threads: chunkThreads,
-                rendered,
-                renderedThreads,
-                incrementChunkMediaLoaded() {
-                    renderedThreads.value++;
-
-                    if (renderedThreads.value === this.threads.length) {
-                        rendered.value = true;
-                    }
-                },
-            };
-        }
-
-        const chunk: ThreadChunk = createChunkObject(chunkIndex.value, chunkThreads)
+        const chunk: ThreadChunk = useThreadChunk(chunkIndex.value, chunkThreads)
 
         chunkThreads.forEach(thread => {
             thread.setChunk(chunk)
@@ -78,13 +61,13 @@ export function useListFeedChunkLoader(baseList: any) {
         return true
     }
 
-    async function boot(isRebooting?: boolean) {
+    async function boot(restart?: boolean) {
         baseList.clearList()
         clearChunks()
 
         loading.boot = true
 
-        if (isRebooting) {
+        if (restart) {
             await new Promise((resolve) => setTimeout(resolve, 800))
             await baseList.refetchList()
         } else {
