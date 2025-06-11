@@ -4,44 +4,52 @@ import { useListFeedWorker } from '@gridsky/core/runtime/composables/useListFeed
 import { useAgent } from '@gridsky/core/runtime/composables/useAtproto';
 import { ThreadModel } from '@gridsky/core/runtime/models/ThreadModel';
 import { useAccountStore } from '@gridsky/core/runtime/stores/storeAccount';
+import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
+import {useListFeedChunkLoader} from "@gridsky/core/runtime/composables/useListFeedChunkLoader";
+import {useListNavigation} from "@gridsky/core/runtime/composables/useListNavigation";
 
 export function useListActorLikes() {
-    const baseList = useListBase();
-    const { cursor, resetCursor, updateCursor } = useListCursor();
     const accountStore = useAccountStore();
 
     const workerConfig = {
-        fetcher: {
-            method: 'app.bsky.feed.getActorLikes',
-            options: {
-                actor: accountStore.account.did,
-                limit: 100,
-            },
+      parser: {
+        listKey: 'feed',
+        actions: {
+          resetCursor: false
         },
-        processor: {
-            listKey: 'feed',
-        },
-        storage: {
-            context: 'gridsky:common',
-            name: 'ProfileLikes',
-            key: accountStore.account.did,
-        },
+      },
+      storage: {
+        context: 'gridsky:common',
+        name: 'ProfileLikes',
+        key: accountStore.account.did,
+      },
     };
 
+    const baseList = useListBase();
+    const { cursor, resetCursor, updateCursor } = useListCursor();
     const { worker, postMessage, listenOnce } = useListFeedWorker(workerConfig);
 
     const _this: any = {
         ...baseList,
         fetchList,
+        refetchList,
         requestItems,
         cursor,
         worker,
     };
 
-    async function requestItems(resetCursorFlag?: boolean) {
-        if (resetCursorFlag) {
+    const chunkLoader = useListFeedChunkLoader(_this);
+    _this.chunkLoader = chunkLoader
+
+    const navigation = useListNavigation(_this)
+    _this.navigation = navigation
+
+    async function requestItems(reset?: boolean) {
+        if (reset) {
             resetCursor();
         }
+
+        workerConfig.parser.actions.resetCursor = !!reset
 
         const response = await useAgent('auto').app.bsky.feed.getActorLikes({
             actor: accountStore.account.did,
@@ -49,45 +57,60 @@ export function useListActorLikes() {
             cursor: cursor.value,
         });
 
-        if (response.data?.cursor) {
+        // why does it return a cursor if it has reached end?
+        // let me handle that
+        if (response.data.feed.length < 100) {
+          delete response.data.cursor
+        }
+
+        if (response.data && response.data.cursor) {
             updateCursor(response.data.cursor);
         }
 
-        postMessage('fetch', {
-            meta: {
-                overrideConfig: {
-                    fetcher: {
-                        response,
-                    },
-                },
-            },
+        postMessage({
+          type: 'process',
+          config: workerConfig,
+          response
         });
 
         return new Promise((resolve) => {
-            listenOnce('fetch', async (e) => {
+            listenOnce('processed', async (e) => {
                 await appendItems(e.data.result);
+                chunkLoader.preloadNextChunk('FeedModel');
                 resolve(true);
             });
         });
     }
 
     async function appendItems(data: { hasReachedEnd: boolean; items: any[] }) {
-        baseList.prepareToAppendItems();
+        baseList.prepareToAppendItems()
 
-        let index = baseList.list.value.length;
+        // convert each item in ThreadModel and populate list
+        const threadsInstanced: ThreadModel[] = []
 
-        const threadsInstanced: ThreadModel[] = data.items.map((item: any) => {
-            return new ThreadModel(item, index++);
-        });
+        let index = baseList.list.value.length
 
-        data.items = threadsInstanced;
+        data.items.forEach((thread: any) => {
+          const threadInstance = useThreadModel(thread, index);
+          threadsInstanced.push(threadInstance);
+          index++
+        })
 
-        await baseList.appendItems(data);
+        // overwrite items with instanced items
+        data.items = threadsInstanced
+
+        // call parent method to append lists
+        await baseList.appendItems(data)
     }
 
     async function fetchList(restart?: boolean) {
-        baseList.isLoading.value = true;
-        await requestItems(restart);
+      baseList.isLoading.value = true;
+      await requestItems(restart);
+      baseList.isLoading.value = false;
+    }
+
+    async function refetchList() {
+      await fetchList(true);
     }
 
     return _this;
