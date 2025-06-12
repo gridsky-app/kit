@@ -35,6 +35,7 @@ const avatar = computed(() => {
     :avatar="avatar"
     :size="size"
     :loading="loading"
+    :border="border"
   >
     <slot/>
   </BaseAvatar>

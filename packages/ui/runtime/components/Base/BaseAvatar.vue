@@ -2,7 +2,7 @@
 import {getAvatarLetter} from '@gridsky/core/runtime/utils/utilString';
 import {computed} from 'vue';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   title?: string;
   avatar?: {
     letter?: string;
@@ -16,7 +16,10 @@ const props = defineProps<{
   size?: number;
   link?: string;
   loading?: boolean
-}>();
+  border?: boolean
+}>(), {
+  border: true
+});
 
 const displayLetter = computed(() => {
   if (props.avatar?.letter) {
@@ -36,17 +39,17 @@ const displayLetter = computed(() => {
     class="gsky-avatar"
     :title="title"
     :size="size"
-    border
+    :border="border"
   >
 
-    <img v-if="avatar?.image" :src="avatar?.image" :alt="title" loading="lazy"/>
+    <v-img v-if="avatar?.image" :src="avatar?.image" :alt="title" />
     <Icon v-else-if="avatar?.icon?.name" v-bind="avatar?.icon"/>
     <span v-else v-text="displayLetter"/>
 
     <v-progress-circular
       v-if="loading"
       indeterminate
-      :size="size - 2"
+      :size="size - 1"
       :width="2"
     />
 
