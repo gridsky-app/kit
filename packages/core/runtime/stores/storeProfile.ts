@@ -256,11 +256,11 @@ export const useProfileStore = function (profileHandle: string) {
       appearance.value = data
     }
 
-    const pageController = ref()
-
-    function setPageController(controller) {
-      pageController.value = controller
-    }
+    const pageTitle = computed(() => {
+      return profile.value.displayName
+        ? `${profile.value.displayName} (@${profile.value.handle})`
+        : `@${profile.value.handle}`
+    })
 
     return {
       did,
@@ -281,8 +281,7 @@ export const useProfileStore = function (profileHandle: string) {
       setProfileAppearance,
       setData,
 
-      pageController,
-      setPageController,
+      pageTitle,
     }
   })()
 }
