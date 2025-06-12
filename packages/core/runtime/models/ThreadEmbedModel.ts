@@ -69,7 +69,11 @@ export class ThreadEmbedModel {
 
                 return 'image'
             case 'app.bsky.embed.video#view':
-                return 'video'
+                if (this.video) {
+                  return 'video'
+                }
+
+                return 'text'
             default:
                 return 'text'
         }
