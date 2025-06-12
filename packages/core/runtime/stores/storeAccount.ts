@@ -11,36 +11,31 @@ export const useAccountStore = defineStore("account", () => {
     const accountPremiumStore = useAccountPremiumStore()
     const accountPreferencesStore = useAccountPreferencesStore()
     const accountSessionStore = useAccountSessionStore()
-    const accountBookmarkStore = useAccountBookmarksStore()
-    const accountFeedGeneratorPreferencesStore = useAccountFeedGeneratorPreferencesStore()
-    const accountSearchCategoriesStore = useAccountSearchCategoriesStore()
-    const accountFeedGeneratorCategoriesStore = useAccountFeedGeneratorCategoriesStore()
     const suggestionProfilesStore = useSuggestionProfilesStore()
-    const threadDraftListStore = useThreadDraftListStore()
     const dbCommonStore = useDbCommonStore()
 
     const account: Ref<any> = ref()
     const serviceEndpoint: Ref<any> = ref()
 
-    async function getAccount(completeFetch: boolean = false) {
+    async function getAccount(initialFetch: boolean = false) {
         const account = await getProfile(accountSessionStore.activeDid)
 
         setAccount(account)
 
-        // update session account data for account switch
+        // update session account data
+        // (required during initial run or on switch account)
         accountSessionStore.setSessionAccount(account)
 
         const profileStore = useProfileStore(account.handle)
         const profileGridStore = useProfileGridStore(account.handle)
 
-        if (completeFetch) {
+        if (initialFetch) {
             await Promise.allSettled([
                 profileStore.loadProfile(restoreAccountCallback),
                 suggestionProfilesStore.fetchSuggestionProfilesLogged(),
             ])
 
             await accountPreferencesStore.fetchAccountPreferences()
-            threadDraftListStore.fetchDraftList()
         }
 
         function restoreAccountCallback() {
@@ -117,5 +112,7 @@ export const useAccountStore = defineStore("account", () => {
         updateLocalProfile,
     }
 }, {
-    persist: {storage: window.localStorage}
+    persist: {
+      storage: window.localStorage
+    }
 })
