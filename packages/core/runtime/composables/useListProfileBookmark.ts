@@ -4,12 +4,14 @@ import {useListNavigation} from './useListNavigation';
 import {useListFeedWorker} from './useListFeedWorker';
 import {useListFeedChunkLoader} from './useListFeedChunkLoader';
 import {useAccountSessionStore} from '@gridsky/core/runtime/stores/storeAccountSession'
+import {useAccountBookmarksStore} from "@gridsky/core/runtime/stores/storeAccountBookmarks";
 import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
 import {useAgent} from './useAtproto';
 import {BookmarkRecord} from "@/lex";
 
 export function useListProfileBookmark(source) {
   const accountSessionStore = useAccountSessionStore()
+  const accountBookmarkStore = useAccountBookmarksStore()
 
   const workerConfig = {
     parser: {
@@ -62,6 +64,11 @@ export function useListProfileBookmark(source) {
       limit: 50,
     });
 
+    // store original bookmark records
+    accountBookmarkStore.bookmarks.push(
+      ...response.records
+    )
+
     const bookmarkRecords = response.records.filter(record => !!record.value?.subject);
     const postUris = bookmarkRecords.map(record => record.value.subject);
 
@@ -103,6 +110,7 @@ export function useListProfileBookmark(source) {
     data.items.forEach((thread: any) => {
       const threadInstance = useThreadModel(thread, index);
       threadsInstanced.push(threadInstance);
+      threadInstance.setBookmark(true)
       index++
     })
 

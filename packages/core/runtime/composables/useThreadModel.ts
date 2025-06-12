@@ -15,6 +15,7 @@ export function useThreadModel(initialData: any | string, index?: number) {
   const updatedAt = ref(Date.now())
   const flags = reactive({
     mediaReady: false,
+    hasBookmark: false,
     hasLike: false,
     likesLoaded: false,
     commentsLoaded: false,
@@ -177,6 +178,14 @@ export function useThreadModel(initialData: any | string, index?: number) {
     })
   }
 
+  const isBookmarked = computed(() => {
+    return flags.hasBookmark
+  })
+
+  function setBookmark(value: boolean) {
+    flags.hasBookmark = value
+  }
+
   const layoutHorizontal = computed(() => {
     let fillImage = false
     let mediaColumnStyles: any = {}
@@ -261,6 +270,8 @@ export function useThreadModel(initialData: any | string, index?: number) {
     setLike,
     toggleLike,
     getThreadLikes,
+    isBookmarked,
+    setBookmark,
     layoutHorizontal,
     setMediaReady,
   }
