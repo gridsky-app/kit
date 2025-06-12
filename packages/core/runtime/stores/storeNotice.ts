@@ -1,15 +1,16 @@
 export const useNoticeStore = defineStore("error", () => {
-    const error: Ref<null | any> = ref(null)
+    const notice: Ref<null | GridskyNotice> = ref(null)
 
-    function setNotice(data: any) {
-        error.value = {
+    function setNotice(data: GridskyNotice) {
+        notice.value = {
             code: data.error,
-            message: data.message
+            message: data.message,
+            persistent: !!data.persistent,
         }
     }
 
     return {
         setNotice,
-        error,
+        notice,
     }
 })
