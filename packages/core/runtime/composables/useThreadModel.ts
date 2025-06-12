@@ -4,6 +4,7 @@ import { ThreadEmbedModel } from "../models/ThreadEmbedModel";
 import { ThreadReplyHandler } from "../models/ThreadReplyHandler";
 import { useAgent } from "../composables/useAtproto";
 import { useThreadSelection } from './useThreadSelection';
+import { useOnline } from '@vueuse/core'
 
 export function useThreadModel(initialData: any | string, index?: number) {
   // reactive state
@@ -84,6 +85,12 @@ export function useThreadModel(initialData: any | string, index?: number) {
   }
 
   async function refreshThreadInteractions() {
+    const isOnline = useOnline()
+
+    if (!isOnline.value) {
+      return
+    }
+
     const result = await useAgent('auto').getPostThread({ uri: post.uri })
     const data = result.data
     if (data?.thread) {
