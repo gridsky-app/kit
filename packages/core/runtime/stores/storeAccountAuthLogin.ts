@@ -1,4 +1,5 @@
 import {createAgent} from '@gridsky/core/runtime/utils/utilAtproto'
+import { useAtprotoOAuth } from "@gridsky/core/runtime/composables/useAtproto"
 import {useAccountStore} from '@gridsky/core/runtime/stores/storeAccount'
 import {useAccountSessionStore} from '@gridsky/core/runtime/stores/storeAccountSession'
 import {useAccountAgentStore} from '@gridsky/core/runtime/stores/storeAccountAgent'
@@ -52,6 +53,7 @@ export const useAccountAuthLoginStore = defineStore('account/auth/login', () => 
                 authFactorToken: fieldAuthFactorToken.value,
             })
             .then(async (session) => {
+
                 // populate session archive
                 accountSessionStore.setSession(
                     session.data.did,
@@ -67,10 +69,10 @@ export const useAccountAuthLoginStore = defineStore('account/auth/login', () => 
                 await accountStore.getAccount(true)
 
                 // route to home
-                useRouter().push('/').then(() => {
-                    // reset login form
-                    setTimeout(reset, 1000)
-                })
+                navigateTo('/')
+
+                // reset login form
+                setTimeout(reset, 1000)
 
             })
             .catch(e => {

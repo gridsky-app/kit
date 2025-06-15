@@ -49,7 +49,7 @@ const displayLetter = computed(() => {
     <v-progress-circular
       v-if="loading"
       indeterminate
-      :size="size - 1"
+      :size="size - (border ? 2 : 1)"
       :width="2"
     />
 

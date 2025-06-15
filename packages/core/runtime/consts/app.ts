@@ -1,6 +1,6 @@
 export const dbVersion = 1
 
-export const gridskyAeLabel = 'Æstetics'
+export const gridskyAeLabel = 'Æsthetics'
 export const gridskyAeIcon = 'Æ'
 
 export const gridskyCollectionPreferences = 'app.gridsky.preferences'
