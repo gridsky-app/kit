@@ -3,6 +3,8 @@ import {useAccountStore} from '@gridsky/core/runtime/stores/storeAccount'
 
 // todo migrate to profileDid or just pass the profile
 import {workerSlugify} from "@gridsky/core/runtime/workers/utils/utilWorkerString";
+import {isLogged} from "../utils/utilAccount";
+import {useThreadDraftListStore} from "./storeThreadDraftList";
 
 export function useProfileGridStore(profileHandle: string) {
   return defineStore(`profile/grid/${makeHandleLonger(profileHandle)}`, () => {
