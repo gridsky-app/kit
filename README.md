@@ -66,12 +66,7 @@ As we're getting started, early funding will be incredibly valuable in helping u
 
 ## Supporting
 
-Our main source of income will be from profile customizations and you will unlock lifetime perks once a certain contribution threshold is reached. Currently, you can support us through [Patreon](https://www.patreon.com/join/gridsky).
-
-You're free to donate as much as you want, whenever you want. Even just $1 a month would keep us motivated, improving the app and enabling new integrations that directly benefit your experience.
-
-> Once you reach 96 Æ, you'll unlock all current and future perks.  
-> Æ stands for aesthetics. As you might guess, 1 Æ equals 1 USD
+Our main source of income will be from profile customizations, you will unlock lifetime perks once a certain contribution threshold is reached. You can support with [Gridsky Æsthetics](https://gridsky.pages.dev/ae).
 
 ## License
 
