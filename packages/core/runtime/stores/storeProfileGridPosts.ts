@@ -10,8 +10,6 @@ export const useProfileGridPostsStore = function (profile: BskyProfile, grid: an
       }
 
       model.value = useListProfilePosts(grid.posts, grid.name)
-
-      model.value.setupWorker()
     }
 
     return {

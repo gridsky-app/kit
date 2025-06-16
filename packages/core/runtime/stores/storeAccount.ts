@@ -1,5 +1,12 @@
 import {AppBskyActorDefs} from "@atproto/api";
+import {useAgent} from "@gridsky/core/runtime/composables/useAtproto";
+import { useAccountAppearanceStore } from "@gridsky/core/runtime/stores/storeAccountAppearance"
+import { useAccountPreferencesStore } from "@gridsky/core/runtime/stores/storeAccountPreferences"
 import { useAccountSessionStore } from "@gridsky/core/runtime/stores/storeAccountSession"
+import { useAccountGridStore } from "@gridsky/core/runtime/stores/storeAccountGrid"
+import { useAccountPremiumStore } from "@gridsky/core/runtime/stores/storeAccountPremium"
+import { useSuggestionProfilesStore } from "@gridsky/core/runtime/stores/storeSuggestionProfiles"
+import { useAppThemeStore } from "@gridsky/core/runtime/stores/storeAppTheme"
 import { useProfileStore } from "@gridsky/core/runtime/stores/storeProfile"
 import { useProfileGridStore } from "@gridsky/core/runtime/stores/storeProfileGrid"
 
@@ -18,7 +25,13 @@ export const useAccountStore = defineStore("account", () => {
     const serviceEndpoint: Ref<any> = ref()
 
     async function getAccount(initialFetch: boolean = false) {
-        const account = await getProfile(accountSessionStore.activeDid)
+        const account = await await useAgent('auto')
+          .getProfile({
+            actor: accountSessionStore.activeDid
+          })
+          .then(response => {
+            return respone.data
+          })
 
         setAccount(account)
 
