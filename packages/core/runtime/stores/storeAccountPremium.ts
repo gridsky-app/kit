@@ -1,4 +1,5 @@
 import { useAccountStore } from "@gridsky/core/runtime/stores/storeAccount"
+import { useAccountPremiumStore } from "@gridsky/core/runtime/stores/storeAccountPremium"
 
 export const useAccountPremiumStore = defineStore("account/premium", () => {
   const accountStore = useAccountStore()

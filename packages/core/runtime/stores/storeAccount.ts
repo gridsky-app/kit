@@ -30,7 +30,7 @@ export const useAccountStore = defineStore("account", () => {
             actor: accountSessionStore.activeDid
           })
           .then(response => {
-            return respone.data
+            return response.data
           })
 
         setAccount(account)

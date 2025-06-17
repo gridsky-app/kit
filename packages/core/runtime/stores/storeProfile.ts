@@ -8,7 +8,7 @@ import {
   resolveActorServiceEndpoint
 } from "@gridsky/core/runtime/utils/utilProfile"
 import {generateId} from "@gridsky/core/runtime/utils/utilString"
-import {isLogged} from "../utils/utilAccount";
+import {isLogged} from "@gridsky/core/runtime/utils/utilAccount";
 
 interface PendingProfileRequest {
   onCache?: (data: any) => void

@@ -2,6 +2,7 @@ import { useAccountStore } from "@gridsky/core/runtime/stores/storeAccount"
 import {useAgent} from "@gridsky/core/runtime/composables/useAtproto";
 import {RichText} from "@atproto/api"
 import {useThreadModel} from "@gridsky/core/runtime/composables/useThreadModel";
+import {STATE_THREAD_REPLY_PARENT} from "@gridsky/core/runtime/consts/state"
 
 export class ThreadReplyHandler {
     private text: string = ''

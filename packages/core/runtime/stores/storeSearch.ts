@@ -1,3 +1,6 @@
+import { useAppThemeStore } from "@gridsky/core/runtime/stores/storeAppTheme"
+import { useNotificationListStore } from "@gridsky/core/runtime/stores/storeNotificationList"
+
 export const useSearchStore = defineStore("search", () => {
   const appThemeStore = useAppThemeStore()
   const notificationListStore = useNotificationListStore()

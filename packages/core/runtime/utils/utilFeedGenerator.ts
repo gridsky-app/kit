@@ -1,4 +1,7 @@
 import {useAgent} from "@gridsky/core/runtime/composables/useAtproto";
+import { useAccountPreferencesStore } from "@gridsky/core/runtime/stores/storeAccountPreferences"
+import {isLogged} from "@gridsky/core/runtime/utils/utilAccount"
+
 import type {VueI18nTranslation} from "vue-i18n";
 
 export function routeFeed(feedGeneratorDetails: string | any) {

@@ -1,6 +1,8 @@
 import { useAccountStore } from "@gridsky/core/runtime/stores/storeAccount"
+import { useAccountAppearanceStore } from "@gridsky/core/runtime/stores/storeAccountAppearance"
+import { useAccountFeedGeneratorPreferencesStore } from "@gridsky/core/runtime/stores/storeAccountFeedGeneratorPreferences"
+
 import { useProfileStore } from "@gridsky/core/runtime/stores/storeProfile"
-import {useAccountAppearanceStore} from "@gridsky/core/runtime/stores/storeAccountAppearance";
 import {useAccountFeedGeneratorPreferencesStore} from "@gridsky/core/runtime/stores/storeAccountFeedGeneratorPreferences";
 
 export const useAccountPreferencesStore = defineStore("account/preferences", () => {

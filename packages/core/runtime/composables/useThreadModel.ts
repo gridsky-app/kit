@@ -5,6 +5,7 @@ import { ThreadReplyHandler } from "../models/ThreadReplyHandler";
 import { useAgent } from "../composables/useAtproto";
 import { useThreadSelection } from './useThreadSelection';
 import { useOnline } from '@vueuse/core'
+import {isLogged} from "@gridsky/core/runtime/utils/utilAccount"
 
 export function useThreadModel(initialData: any | string, index?: number) {
   // reactive state

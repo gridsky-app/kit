@@ -1,6 +1,7 @@
 import { useAccountPreferencesStore } from "@gridsky/core/runtime/stores/storeAccountPreferences"
+
 import {getFeedGeneratorDetailsCache} from "../utils/utilFeedGenerator";
-import {isLogged} from "../utils/utilAccount";
+import {isLogged} from "@gridsky/core/runtime/utils/utilAccount";
 
 export const useAccountFeedGeneratorPreferencesStore = defineStore("account/feed/preferences", () => {
     const typeFeedPreferences = 'app.bsky.actor.defs#savedFeedsPrefV2'

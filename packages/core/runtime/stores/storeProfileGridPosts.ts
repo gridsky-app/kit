@@ -9,7 +9,7 @@ export const useProfileGridPostsStore = function (profile: BskyProfile, grid: an
         return
       }
 
-      model.value = useListProfilePosts(grid.posts, grid.name)
+      model.value = useListProfilePosts(grid.posts ?? [], grid.name)
     }
 
     return {

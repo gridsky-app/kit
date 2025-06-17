@@ -1,7 +1,8 @@
 import { useAccountStore } from "@gridsky/core/runtime/stores/storeAccount"
 import { useProfileStore } from "@gridsky/core/runtime/stores/storeProfile"
 import { useProfileGridStore } from "@gridsky/core/runtime/stores/storeProfileGrid"
-import { useProfilePostsStore } from "@gridsky/core/runtime/stores/storeProfilePosts"
+import { useProfileGridPostsStore } from "@gridsky/core/runtime/stores/storeProfileGridPosts"
+import {isLogged} from "@gridsky/core/runtime/utils/utilAccount"
 
 export const useProfilePageStore = function (handle: string) {
     return defineStore(`profile/page/${makeHandleLonger(handle)}`, () => {
@@ -22,7 +23,7 @@ export const useProfilePageStore = function (handle: string) {
             profileFeedController.value.setup()
 
             for (let grid of profileGridStore.gridListWithExtraItems) {
-                profileGridPostsController.value[grid.name] = useProfilePostsStore(profileStore.profile, `${profileStore.profile.did}:${grid.name}`)
+                profileGridPostsController.value[grid.name] = useProfileGridPostsStore(profileStore.profile, `${profileStore.profile.did}:${grid.name}`)
                 profileGridPostsController.value[grid.name].setup(grid.postsToFetch)
 
                 if (grid.postsToFetch && grid.postsToFetch.length === 0 && !shouldLoadProfileFeed) {

@@ -1,7 +1,8 @@
 import { useAccountStore } from "@gridsky/core/runtime/stores/storeAccount"
+
 import {deepClone} from "@gridsky/core/runtime/utils/utilObject";
-import {appAppearanceConfig} from "../config/appearance";
-import {isLogged} from "../utils/utilAccount";
+import {appAppearanceConfig} from "@gridsky/core/runtime/config/appearance";
+import {isLogged} from "@gridsky/core/runtime/utils/utilAccount";
 
 export const useAccountAppearanceStore = defineStore("account/appearance", () => {
     const accountStore = useAccountStore()

@@ -188,6 +188,8 @@ export const useAccountSessionStore = defineStore("account/auth/session", () => 
     }
 
     function resetActiveSession() {
+      console.log('hehe 1')
+      return
         accountStore.resetAccount()
 
         delete sessions.value[activeDid.value]
@@ -196,6 +198,8 @@ export const useAccountSessionStore = defineStore("account/auth/session", () => 
     }
 
     function invalidateActiveSession() {
+      console.log('hehe 2')
+      return
         const did = activeDid.value
         const session = sessions.value[did]
 

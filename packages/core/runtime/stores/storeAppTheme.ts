@@ -5,6 +5,7 @@ import { useNotificationListStore } from "@gridsky/core/runtime/stores/storeNoti
 import { useProfileStore } from "@gridsky/core/runtime/stores/storeProfile"
 import {appAppearanceConfig} from "@gridsky/core/runtime/config/appearance";
 import {deepClone} from "@gridsky/core/runtime/utils/utilObject";
+import {STATE_PROFILE_GLOBAL} from "@gridsky/core/runtime/consts/state";
 
 export const useAppThemeStore = defineStore("app/theme", () => {
     const accountStore = useAccountStore()
