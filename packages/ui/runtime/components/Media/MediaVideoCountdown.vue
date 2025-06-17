@@ -18,7 +18,7 @@ const formattedRemainingTime = computed(() => {
   <v-fade-transition>
     <div
         v-if="props.remaining > 4"
-        class="gsky-media__video__duration text-white text-overline"
+        class="gsky-media__video__duration text-overline"
         v-text="formattedRemainingTime"
     />
   </v-fade-transition>

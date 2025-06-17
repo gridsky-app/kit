@@ -57,12 +57,6 @@ export function useListActorLikes() {
             cursor: cursor.value,
         });
 
-        // why does it return a cursor if it has reached end?
-        // let me handle that
-        if (response.data.feed.length < 100) {
-          delete response.data.cursor
-        }
-
         if (response.data && response.data.cursor) {
             updateCursor(response.data.cursor);
         }

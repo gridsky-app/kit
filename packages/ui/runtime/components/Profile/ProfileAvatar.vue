@@ -17,13 +17,14 @@ const props = withDefaults(
   }>(),
   {
     size: 120,
+    border: true,
   },
 )
 
 const avatar = computed(() => {
   return {
-    image: props.profile.avatar,
-    letter: props.profile.handle,
+    image: props.profile?.avatar,
+    letter: props.profile?.handle,
     icon: props.icon,
   }
 })

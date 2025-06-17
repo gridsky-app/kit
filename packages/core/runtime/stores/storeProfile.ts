@@ -86,9 +86,6 @@ export const useProfileStore = function (profileHandle: string) {
       const requestId = generateId(8)
 
       function handleWorkerProfileResponse(data) {
-        isLoading.value = false
-        isReady.value = true
-
         setData(data)
 
         // pass fetched profile data to an additional callback
@@ -96,6 +93,9 @@ export const useProfileStore = function (profileHandle: string) {
         if (typeof callback === 'function') {
           callback(data)
         }
+
+        isLoading.value = false
+        isReady.value = true
       }
 
       // run worker / send instructions to the web worker
@@ -163,7 +163,10 @@ export const useProfileStore = function (profileHandle: string) {
         did: did.value,
         handle: handle.value,
         serviceEndpoint: serviceEndpoint.value,
-        profile: toRaw(profile.value),
+        // better not to pass the profile since
+        // it is initialized in the profile middleware
+        // with really minimum data (like the handle)
+        // profile: toRaw(profile.value),
         appearance: undefined,
         premium: toRaw(premium.value),
       }
