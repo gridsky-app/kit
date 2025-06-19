@@ -3,6 +3,7 @@ import { useAccountSessionStore } from "@gridsky/core/runtime/stores/storeAccoun
 import { useProfileStore } from "@gridsky/core/runtime/stores/storeProfile"
 import { useThreadDraftListStore } from "@gridsky/core/runtime/stores/storeThreadDraftList"
 import {getProfileAppearance} from "@/utils/utilProfileAppearance";
+import {computed} from 'vue'
 
 export function isLogged() {
   const accountStore = useAccountStore()
@@ -10,14 +11,18 @@ export function isLogged() {
   return accountStore.isLogged
 }
 
+export function isLoggedAccount(profile: BskyProfile) {
+  const accountStore = useAccountStore()
+
+  return computed(() => {
+    return isLogged() && accountStore.isAuthor(profile)
+  })
+}
+
 export function hasMoreSessions() {
   const accountSessionStore = useAccountSessionStore()
 
   return Object.keys(accountSessionStore.sessions).length > 0
-}
-
-export function navigateToLogin() {
-  navigateTo('/accounts/login')
 }
 
 export async function refreshAccountProfile() {

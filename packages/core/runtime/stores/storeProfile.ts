@@ -75,10 +75,8 @@ export const useProfileStore = function (profileHandle: string) {
      *
      * It runs the onCache promise if cache is available
      * then if fetches the complete profile with remote data
-     *
-     * @param callback
      */
-    async function loadProfile(callback?: any): Promise<void> {
+    async function loadProfile(): Promise<void> {
       if (isReady.value) {
         return
       }
@@ -87,12 +85,6 @@ export const useProfileStore = function (profileHandle: string) {
 
       function handleWorkerProfileResponse(data) {
         setData(data)
-
-        // pass fetched profile data to an additional callback
-        // (for example to update the account store data too)
-        if (typeof callback === 'function') {
-          callback(data)
-        }
 
         isLoading.value = false
         isReady.value = true
@@ -135,13 +127,15 @@ export const useProfileStore = function (profileHandle: string) {
 
       }
 
-      const [workerResult, profileResult] = await Promise.allSettled(
+      const [workerResult] = await Promise.allSettled(
         loadProfilePromises
       )
+    }
 
-      if (profileResult && profileResult.status === 'fulfilled') {
-        profile.value.viewer = profileResult.value.viewer
-      }
+    async function loadProfileViewer() {
+      await getProfile(makeHandleLonger(profileHandle)).then(p => {
+        profile.value.viewer = p.viewer
+      })
     }
 
     /**
@@ -277,6 +271,7 @@ export const useProfileStore = function (profileHandle: string) {
       isReady,
 
       loadProfile,
+      loadProfileViewer,
       resolveDid,
       resolveServiceEndpoint,
       setProfile,
