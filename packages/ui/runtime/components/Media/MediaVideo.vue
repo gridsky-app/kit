@@ -48,6 +48,10 @@ onMounted(() => {
     }
   })
 
+  videoRef.value.addEventListener('ended', () => {
+    props.thread.post.embed.video.pauseVideo()
+  })
+
   emit('ready')
 })
 
