@@ -24,7 +24,7 @@ export const useAccountStore = defineStore("account", () => {
     const account: Ref<any> = ref()
     const serviceEndpoint: Ref<any> = ref()
 
-    async function getAccount(initialFetch: boolean = false) {
+    async function getAccount(completeFetch: boolean = false) {
         const account = await await useAgent('auto')
           .getProfile({
             actor: accountSessionStore.activeDid
@@ -42,16 +42,14 @@ export const useAccountStore = defineStore("account", () => {
         const profileStore = useProfileStore(account.handle)
         const profileGridStore = useProfileGridStore(account.handle)
 
-        if (initialFetch) {
+        if (completeFetch) {
             await Promise.allSettled([
-                profileStore.loadProfile(restoreAccountCallback),
+                profileStore.loadProfile(),
                 suggestionProfilesStore.fetchSuggestionProfilesLogged(),
             ])
 
             await accountPreferencesStore.fetchAccountPreferences()
-        }
 
-        function restoreAccountCallback() {
             serviceEndpoint.value = profileStore.serviceEndpoint
             accountPremiumStore.premium = profileStore.premium
             accountAppearanceStore.setAccountAppearance(profileStore.appearance)

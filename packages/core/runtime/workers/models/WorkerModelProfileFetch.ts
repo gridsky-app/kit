@@ -114,6 +114,7 @@ export class WorkerModelProfileFetch {
     function normalizeGridList(list: any[]): GridskyProfileRawGrid[] {
       return list.map((item) => ({
         label: item.label || 'Posts',
+        id: item.id ?? item.name ?? generateId(8),
         name: item.name || workerSlugify(item.label || 'Posts'),
         layout: item.layout || '1-1',
         posts: item.posts || []
