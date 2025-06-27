@@ -5,12 +5,22 @@ export function useListNavigation(listContext: {
   fetchList?: () => Promise<any>;
   isLoading?: { value: boolean };
 }) {
-  const activeIndex = ref(-1);
+  const scrollToActive = ref<boolean>(false);
+
+  function setScrollToActive(value: boolean) {
+    scrollToActive.value = value;
+  }
+
+  const activeIndex = ref<number>(-1);
   const indexOffsetLoadMoreBeforeEndReached = 3;
+
+  const hasNavigatorReachedStart = computed(() => {
+    return activeIndex.value === 0
+  })
 
   const hasNavigatorReachedEnd = computed(() => {
     return activeIndex.value === listContext.list.value.length - 1;
-  });
+  })
 
   const activeItem = computed(() => {
     return activeIndex.value >= 0 ? listContext.list.value[activeIndex.value] : undefined;
@@ -29,11 +39,11 @@ export function useListNavigation(listContext: {
   }
 
   function prevItem() {
-    if (activeIndex.value > 0) {
-      activeIndex.value--;
-      return true;
-    }
-    return false;
+    // Stop if already at the start
+    if (hasNavigatorReachedStart.value) return false;
+
+    activeIndex.value--;
+    return true;
   }
 
   async function nextItem() {
@@ -68,11 +78,14 @@ export function useListNavigation(listContext: {
   }
 
   return {
+    scrollToActive,
     activeIndex,
     activeItem,
+    hasNavigatorReachedStart,
     hasNavigatorReachedEnd,
     setActiveIndex,
     resetActiveIndex,
+    setScrollToActive,
     findListIndex,
     prevItem,
     nextItem,
