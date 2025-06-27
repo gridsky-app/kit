@@ -12,8 +12,6 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
   const pageSize = 15;
   let currentPage = 0;
 
-  console.log('parte cosi', uris)
-
   const workerConfig = {
     parser: {
       listKey: 'posts',
@@ -53,7 +51,6 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
   _this.navigation = navigation
 
   function getNextPageUris() {
-    console.log('uris', uris)
     const startIndex = currentPage * pageSize;
     const endIndex = Math.min(startIndex + pageSize, uris.length);
     return uris.slice(startIndex, endIndex);
@@ -126,7 +123,6 @@ export function useListProfilePosts(uris: string[], feedGridKey: string) {
   }
 
   function updateUris(newUris: string[]) {
-    console.log('aggiornali', newUris)
     uris = newUris;
     currentPage = 0;
     baseList.clearList();
