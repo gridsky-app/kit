@@ -23,7 +23,7 @@ export function useThreadChunk(index: number, threads: ThreadModel[]) {
   }
 
   return {
-    id: index,
+    index,
     threads,
     performanceHidden,
     rendered,

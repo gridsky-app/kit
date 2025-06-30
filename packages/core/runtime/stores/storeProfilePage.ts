@@ -23,7 +23,7 @@ export const useProfilePageStore = function (handle: string) {
             profileFeedController.value.setup()
 
             for (let grid of profileGridStore.gridListWithExtraItems) {
-                profileGridPostsController.value[grid.name] = useProfileGridPostsStore(profileStore.profile, `${profileStore.profile.did}:${grid.name}`)
+                profileGridPostsController.value[grid.name] = useProfileGridPostsStore(profileStore.profile, grid)
                 profileGridPostsController.value[grid.name].setup(grid.postsToFetch)
 
                 if (grid.postsToFetch && grid.postsToFetch.length === 0 && !shouldLoadProfileFeed) {
