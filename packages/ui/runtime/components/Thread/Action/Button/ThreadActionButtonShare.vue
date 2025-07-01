@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import {routeThread} from "@gridsky/core/runtime/utils/utilRoute"
 import ThreadActionButton from "./ThreadActionButton.vue";
-//const threadShareDialogStore = useThreadShareDialogStore()
+//const postModalShareStore = usePostModalShareStore()
 
 const props = defineProps<{
   thread: any
 }>()
 
 function onShareClick() {
-  //threadShareDialogStore.openDialog(props.thread)
+  //postModalShareStore.openDialog(props.thread)
 }
 </script>
 
