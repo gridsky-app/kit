@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {getAvatarLetter} from '@gridsky/core/runtime/utils/utilString';
-import {computed} from 'vue';
+import {computed, ref} from 'vue';
 
 const props = withDefaults(defineProps<{
   title?: string;
@@ -17,9 +17,12 @@ const props = withDefaults(defineProps<{
   link?: string;
   loading?: boolean
   border?: boolean
+  eager?: boolean
 }>(), {
   border: true
-});
+})
+
+const imageLoaded = ref(false)
 
 const displayLetter = computed(() => {
   if (props.avatar?.letter) {
@@ -31,7 +34,15 @@ const displayLetter = computed(() => {
   }
 
   return ''
-});
+})
+
+function handleImageLoad() {
+  imageLoaded.value = true;
+}
+
+function handleImageError() {
+  imageLoaded.value = false;
+}
 </script>
 
 <template>
@@ -42,14 +53,21 @@ const displayLetter = computed(() => {
     :border="border"
   >
 
-    <v-img v-if="avatar?.image" :src="avatar?.image" :alt="title" />
+    <img
+      v-if="avatar?.image"
+      :src="avatar?.image"
+      :alt="title"
+      :class="{ 'image-loaded': imageLoaded }"
+      @load="handleImageLoad"
+      @error="handleImageError"
+    />
     <Icon v-else-if="avatar?.icon?.name" v-bind="avatar?.icon"/>
     <span v-else v-text="displayLetter"/>
 
     <v-progress-circular
       v-if="loading"
       indeterminate
-      :size="size - (border ? 2 : 1)"
+      :size="size - (border ? 2 : 0)"
       :width="2"
     />
 
@@ -64,10 +82,19 @@ const displayLetter = computed(() => {
 
 <style scoped lang="scss">
 .gsky-avatar {
+  background-color: rgba(var(--v-theme-skeleton));
+  box-shadow: inset 0 0 0 1px rgba(var(--v-border-color),var(--v-border-opacity));
+
   img {
     width: 100%;
     height: 100%;
     background-size: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+
+    &.image-loaded {
+      opacity: 1;
+    }
   }
 
   a {

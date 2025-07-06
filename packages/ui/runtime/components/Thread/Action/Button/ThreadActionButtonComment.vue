@@ -14,7 +14,7 @@ defineProps<{
         <Icon
             name="iconamoon:comment"
             class="mr-n1"
-            :size="27"
+            :size="26"
         />
       </a>
     </template>

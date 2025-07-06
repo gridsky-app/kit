@@ -14,10 +14,11 @@ const props = withDefaults(
     editable?: boolean
     loading?: boolean
     link?: boolean
+    eager?: boolean
   }>(),
   {
     size: 120,
-    border: true,
+    border: false,
   },
 )
 
@@ -37,6 +38,7 @@ const avatar = computed(() => {
     :size="size"
     :loading="loading"
     :border="border"
+    :eager="eager"
   >
     <slot/>
   </BaseAvatar>

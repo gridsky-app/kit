@@ -29,5 +29,10 @@ const mediaVolumeStore = useMediaVolumeStore()
   background: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(10px);
   z-index: 1;
+
+  @media(max-width: 959px) {
+    bottom: 12px;
+    right: 8px;
+  }
 }
 </style>
