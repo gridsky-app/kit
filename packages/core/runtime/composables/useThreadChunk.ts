@@ -1,7 +1,6 @@
 export function useThreadChunk(index: number, threads: ThreadModel[]) {
   const renderedThreads = ref(0)
   const rendered = ref(false)
-  const performanceHidden = ref(false)
 
   const _height = ref(undefined)
   const height = computed(() => {
@@ -25,7 +24,6 @@ export function useThreadChunk(index: number, threads: ThreadModel[]) {
   return {
     index,
     threads,
-    performanceHidden,
     rendered,
     renderedThreads,
     incrementChunkMediaLoaded() {

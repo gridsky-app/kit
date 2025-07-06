@@ -21,7 +21,6 @@ export function useThreadModel(initialData: any | string, index?: number) {
     likesLoaded: false,
     commentsLoaded: false,
     displayEssentialContent: false,
-    performanceHidden: false
   })
 
   const replyHandler = new ThreadReplyHandler({ post, replies }) // o quello che serve

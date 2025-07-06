@@ -114,10 +114,6 @@ export function useListFeedChunkLoader(baseList: any) {
             return false
         }
 
-        if (!isLastChunkRendered.value) {
-            return false
-        }
-
         if (stillHasMoreChunksToLoad.value) {
             return true
         }
